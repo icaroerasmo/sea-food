@@ -9,6 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode
 public class IndividualPerson extends Person {
     public IndividualPerson() {
-        personType = PersonType.LEGAL_ENTITY;
+        personType = PersonType.INDIVIDUAL_PERSON;
     }
 }
