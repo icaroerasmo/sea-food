@@ -2,13 +2,14 @@ package com.icaroerasmo.seafood.core.model;
 
 import com.icaroerasmo.seafood.core.enums.PersonType;
 import com.mongodb.lang.NonNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
 
+@ToString
 @Getter @Setter
+@EqualsAndHashCode
 public abstract class Person {
     @NonNull
     protected String name;
