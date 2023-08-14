@@ -1,9 +1,7 @@
 package com.icaroerasmo.seafood.core.model;
 
-import com.mongodb.lang.NonNull;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

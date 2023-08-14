@@ -1,15 +1,12 @@
 package com.icaroerasmo.seafood.core.model;
 
 import com.icaroerasmo.seafood.core.enums.PersonType;
-import com.mongodb.lang.NonNull;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
 
-@ToString
-@Getter @Setter
-@EqualsAndHashCode
+@Data
 public abstract class Person {
     @NonNull
     protected String name;
@@ -23,5 +20,6 @@ public abstract class Person {
     protected String phone;
     @NonNull
     protected PersonType personType;
+    @NonNull
     protected List<Address> addresses;
 }

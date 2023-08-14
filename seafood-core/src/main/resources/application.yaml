@@ -1,1 +1,9 @@
-spring.data.mongodb.auto-index-creation=true
+logging:
+  level:
+    root: debug
+spring:
+  data:
+    mongodb:
+      database: "seafood"
+      uri: "mongodb://localhost:27017"
+      auto-index-creation: true
