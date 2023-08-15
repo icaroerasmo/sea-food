@@ -1,10 +1,13 @@
 package com.icaroerasmo.seafood.core.model;
 
+import com.icaroerasmo.seafood.core.enums.AddressType;
 import com.icaroerasmo.seafood.core.enums.PersonType;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 public abstract class Person {

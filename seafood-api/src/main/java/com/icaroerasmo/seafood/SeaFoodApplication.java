@@ -12,12 +12,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Log4j2
+@EnableWebFlux
 @SpringBootApplication
 @EnableReactiveMongoRepositories
 public class SeaFoodApplication implements CommandLineRunner {

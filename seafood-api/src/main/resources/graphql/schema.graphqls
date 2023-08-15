@@ -1,0 +1,72 @@
+scalar Long
+enum AddressType {
+    AVENUE
+    STREET
+    VALLEY
+}
+type Address {
+    addressType: AddressType
+    address: String
+    number: String
+    complement: String
+}
+enum PersonType {
+    INDIVIDUAL_PERSON
+    LEGAL_ENTITY
+}
+type Person {
+    name: String
+    documentNo: String
+    email: String
+    phone: String
+    personType: PersonType
+    addresses: [Address]
+}
+#union Person = IndividualPerson | LegalEntity
+#type IndividualPerson {
+#    name: String
+#    documentNo: String
+#    email: String
+#    phone: String
+#    personType: PersonType
+#    addresses: [Address]
+#}
+#type LegalEntity {
+#    name: String
+#    documentNo: String
+#    email: String
+#    phone: String
+#    personType: PersonType
+#    addresses: [Address]
+#}
+type Item {
+    id: [String]
+    description: [String]
+}
+type Store {
+    id: String
+    storeInfo: Person
+    score: Long
+}
+type Sell {
+    id: String
+    store: Store
+    buyer: User
+    items: [Item]
+}
+type User {
+    id: String
+    password: String
+    userInfo: Person
+}
+type Query {
+    findAllUsersByNamePrefix(namePrefix: String): [User]
+    findAllSellsByUserId(id: ID): [Sell]
+    findAllSellsByStoreId(id: ID): [Sell]
+    findAllStoresByNamePrefix(namePrefix: String): [Store]
+    findAllItemsByDescriptionPrefix(descriptionPrefix: String): [Item]
+    findUserById(id: ID): User
+    findSellById(id: ID): Sell
+    findStoreById(id: ID): Store
+    findItemById(id: ID): Item
+}
