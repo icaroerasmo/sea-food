@@ -22,23 +22,6 @@ type Person {
     personType: PersonType
     addresses: [Address]
 }
-#union Person = IndividualPerson | LegalEntity
-#type IndividualPerson {
-#    name: String
-#    documentNo: String
-#    email: String
-#    phone: String
-#    personType: PersonType
-#    addresses: [Address]
-#}
-#type LegalEntity {
-#    name: String
-#    documentNo: String
-#    email: String
-#    phone: String
-#    personType: PersonType
-#    addresses: [Address]
-#}
 type Item {
     id: [String]
     description: [String]

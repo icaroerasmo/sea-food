@@ -1,13 +1,7 @@
 logging:
   pattern:
-    console: "%d{MM-dd HH:mm:ss.SSS} |%X{x-request-id}| %5p [%t] %-40.40c{1.}.%M : %m%n%ex"
+    console: "%d{MM-dd HH:mm:ss.SSS} |%X{x-request-id}| %5p [%t] %-40.40c{1.} : %m%n%ex"
     level:
       root: error
       com.icaroerasmo.seafood: info
       org.springframework: error
-#spring:
-#  data:
-#    mongodb:
-#      database: "seafood"
-#      uri: "mongodb://mongoadmin:secret@localhost:27017/seafood?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin"
-#      auto-index-creation: true
