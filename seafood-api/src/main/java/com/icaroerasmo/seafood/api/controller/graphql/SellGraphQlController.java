@@ -13,7 +13,7 @@ public class SellGraphQlController extends GraphQlController<Sell> {
 
     @QueryMapping
     public Mono<Sell> findSellById(@Argument String id) {
-        return ((SellService) service).findById(id);
+        return service.findById(id);
     }
 
     @QueryMapping
