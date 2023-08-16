@@ -9,17 +9,16 @@ import reactor.core.publisher.Mono;
 
 @org.springframework.stereotype.Service
 public class SellService extends Service<Sell> {
-    private SellRepository _repository = (SellRepository) repository;
 
     public Mono<Sell> findSellById(String id) {
-        return _repository.findSellById(id);
+        return ((SellRepository) repository).findSellById(id);
     }
 
     public Flux<Sell> findAllSellsByUserId(String id) {
-        return _repository.findAllSellsByUserId(id);
+        return ((SellRepository) repository).findAllSellsByUserId(id);
     }
 
     public Flux<Sell> findAllSellsByStoreId(String id) {
-        return _repository.findAllSellsByStoreId(id);
+        return ((SellRepository) repository).findAllSellsByStoreId(id);
     }
 }

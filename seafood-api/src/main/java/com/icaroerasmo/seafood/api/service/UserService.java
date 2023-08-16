@@ -7,9 +7,8 @@ import reactor.core.publisher.Flux;
 
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
-    private UserRepository _repository = (UserRepository) repository;
 
     public Flux<User> findAllUsersByNamePrefix(String namePrefix) {
-        return _repository.findAllUsersByNamePrefix(namePrefix);
+        return ((UserRepository) repository).findAllUsersByNamePrefix(namePrefix);
     }
 }

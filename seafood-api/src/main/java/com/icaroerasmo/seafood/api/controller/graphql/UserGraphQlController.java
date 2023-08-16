@@ -2,18 +2,14 @@ package com.icaroerasmo.seafood.api.controller.graphql;
 
 import com.icaroerasmo.seafood.api.service.UserService;
 import com.icaroerasmo.seafood.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller
-public class UserController extends GraphQlController<User> {
-
-    private UserService _service = (UserService) service;
+public class UserGraphQlController extends GraphQlController<User> {
 
     @QueryMapping
     public Mono<User> findUserById(@Argument String id) {
@@ -22,6 +18,6 @@ public class UserController extends GraphQlController<User> {
 
     @QueryMapping
     public Flux<User> findAllUsersByNamePrefix(@Argument String namePrefix) {
-        return _service.findAllUsersByNamePrefix(namePrefix);
+        return ((UserService) service).findAllUsersByNamePrefix(namePrefix);
     }
 }

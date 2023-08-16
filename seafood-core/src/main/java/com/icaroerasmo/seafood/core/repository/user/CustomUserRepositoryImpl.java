@@ -4,6 +4,8 @@ import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Flux;
 
 public class CustomUserRepositoryImpl implements CustomUserRepository {
@@ -18,6 +20,6 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
             return Flux.empty();
         }
 
-        return mongoTemplate.find(QueryUtil.queryByPrefix("name", namePrefix), User.class);
+        return mongoTemplate.find(QueryUtil.queryByPrefix("userInfo.name", namePrefix), User.class);
     }
 }

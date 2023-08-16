@@ -7,9 +7,8 @@ import reactor.core.publisher.Flux;
 
 @org.springframework.stereotype.Service
 public class StoreService extends Service<Store> {
-    private StoreRepository _repository = (StoreRepository) repository;
 
     public Flux<Store> findAllStoresByNamePrefix(String namePrefix) {
-        return _repository.findAllStoresByNamePrefix(namePrefix);
+        return ((StoreRepository) repository).findAllStoresByNamePrefix(namePrefix);
     }
 }

@@ -9,22 +9,20 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller
-public class SellController extends GraphQlController<Sell> {
-
-    private SellService _service = (SellService) service;
+public class SellGraphQlController extends GraphQlController<Sell> {
 
     @QueryMapping
     public Mono<Sell> findSellById(@Argument String id) {
-        return service.findById(id);
+        return ((SellService) service).findById(id);
     }
 
     @QueryMapping
     public Flux<Sell> findAllSellsByUserId(@Argument String id) {
-        return _service.findAllSellsByUserId(id);
+        return ((SellService) service).findAllSellsByUserId(id);
     }
 
     @QueryMapping
     public Flux<Sell> findAllSellsByStoreId(@Argument String id) {
-        return _service.findAllSellsByStoreId(id);
+        return ((SellService) service).findAllSellsByStoreId(id);
     }
 }

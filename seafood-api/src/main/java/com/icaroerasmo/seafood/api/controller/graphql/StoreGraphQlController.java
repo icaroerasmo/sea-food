@@ -9,9 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller
-public class StoreController extends GraphQlController<Store> {
-
-    private StoreService _service = (StoreService) service;
+public class StoreGraphQlController extends GraphQlController<Store> {
 
     @QueryMapping
     public Mono<Store> findStoreById(@Argument String id) {
@@ -20,6 +18,6 @@ public class StoreController extends GraphQlController<Store> {
 
     @QueryMapping
     public Flux<Store> findAllStoresByNamePrefix(@Argument String namePrefix) {
-        return _service.findAllStoresByNamePrefix(namePrefix);
+        return ((StoreService) service).findAllStoresByNamePrefix(namePrefix);
     }
 }

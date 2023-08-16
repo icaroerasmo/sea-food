@@ -7,9 +7,7 @@ import reactor.core.publisher.Flux;
 @org.springframework.stereotype.Service
 public class ItemService extends Service<Item> {
 
-    private ItemRepository _repository = (ItemRepository) repository;
-
     public Flux<Item> findAllItemsByDescriptionPrefix(String descriptionPrefix) {
-        return _repository.findAllItemsByDescriptionPrefix(descriptionPrefix);
+        return ((ItemRepository) repository).findAllItemsByDescriptionPrefix(descriptionPrefix);
     }
 }

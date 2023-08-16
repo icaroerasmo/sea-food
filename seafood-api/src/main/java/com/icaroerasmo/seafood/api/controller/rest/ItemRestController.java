@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/api/rest/item")
 @org.springframework.web.bind.annotation.RestController
-public class ItemController extends RestController<Item> {
+public class ItemRestController extends RestController<Item> {
 }

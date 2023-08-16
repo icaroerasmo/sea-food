@@ -18,6 +18,6 @@ public class CustomStoreRepositoryImpl implements CustomStoreRepository {
             return Flux.empty();
         }
 
-        return mongoTemplate.find(QueryUtil.queryByPrefix("name", namePrefix), Store.class);
+        return mongoTemplate.find(QueryUtil.queryByPrefix("storeInfo.name", namePrefix), Store.class);
     }
 }
