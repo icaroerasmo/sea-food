@@ -22,47 +22,12 @@ import java.util.concurrent.ExecutionException;
 @EnableWebFlux
 @SpringBootApplication
 @EnableReactiveMongoRepositories
-public class SeaFoodApplication implements CommandLineRunner {
+public class SeaFoodApplication {
 
 	@Autowired
 	private UserService userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SeaFoodApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		final String password = "P@55w0rd123!";
-		final Address address = new Address(
-				AddressType.AVENUE,
-				"Wall Street",
-				"1053"
-		);
-		final IndividualPerson individualPerson = new IndividualPerson(
-				"Maria Augusta",
-				"1234567891",
-				"user1@user.com",
-				"123456789",
-				Arrays.asList(address));
-
-		final User user = new User(password, individualPerson);
-		CompletableFuture<User> usrComp = new CompletableFuture<>();
-		userService.save(user).subscribe(result -> {
-			log.info("user {} saved!", result.getId());
-			usrComp.complete(result);
-		});
-
-		CompletableFuture.runAsync(() -> {
-			try {
-				User user1 = usrComp.get();
-				System.out.println(user1.getUserInfo().getName());
-				userService.findById(user1.getId()).subscribe((result) -> System.out.println(result.getId()));
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			} catch (ExecutionException e) {
-				throw new RuntimeException(e);
-			}
-		});
 	}
 }
