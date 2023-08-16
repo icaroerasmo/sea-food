@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Log4j2
-@EnableWebFlux
+//@EnableWebFlux
 @SpringBootApplication
 @EnableReactiveMongoRepositories
 public class SeaFoodApplication implements CommandLineRunner {

@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 @Data
-@Document(collation = "user")
+@Document(collection = "user")
 public class User {
     @Id
     private String id;

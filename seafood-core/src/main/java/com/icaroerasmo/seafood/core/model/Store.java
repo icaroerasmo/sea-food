@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collation = "store")
+@Document(collection = "store")
 public class Store {
     @Id
     private String id;
