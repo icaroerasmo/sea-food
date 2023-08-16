@@ -5,7 +5,7 @@ import com.icaroerasmo.seafood.core.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/user")
+@RequestMapping("/api/rest/user")
 @org.springframework.web.bind.annotation.RestController
 public class UserRestController extends RestController<User> {
 }

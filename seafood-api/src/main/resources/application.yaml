@@ -5,7 +5,10 @@ spring:
       uri: "mongodb://mongoadmin:secret@localhost:27017/seafood?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin"
       auto-index-creation: true
   graphql:
+    path: /api/graphql
     graphiql:
+      path: /view/graphiql
+      endpoint: ${spring.graphql.path}
       enabled: true
 logging:
   pattern:

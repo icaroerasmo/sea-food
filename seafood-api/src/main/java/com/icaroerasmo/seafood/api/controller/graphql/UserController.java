@@ -11,10 +11,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller
-public class UserController {
+public class UserController extends GraphQlController<User> {
 
-    @Autowired
-    private UserService service;
+    private UserService _service = (UserService) service;
 
     @QueryMapping
     public Mono<User> findUserById(@Argument String id) {
@@ -23,6 +22,6 @@ public class UserController {
 
     @QueryMapping
     public Flux<User> findAllUsersByNamePrefix(@Argument String namePrefix) {
-        return service.findAll();
+        return _service.findAllUsersByNamePrefix(namePrefix);
     }
 }

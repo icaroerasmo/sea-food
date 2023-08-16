@@ -5,7 +5,7 @@ import com.icaroerasmo.seafood.core.model.Sell;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/sell")
+@RequestMapping("/api/rest/sell")
 @org.springframework.web.bind.annotation.RestController
 public class SellRestController extends RestController<Sell> {
 }
