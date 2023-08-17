@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public abstract class Person {
     
     protected String name;
