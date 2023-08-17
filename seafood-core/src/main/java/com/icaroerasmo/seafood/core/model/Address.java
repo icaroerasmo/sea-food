@@ -6,11 +6,9 @@ import lombok.NonNull;
 
 @Data
 public class Address {
-    @NonNull
+    
     private AddressType addressType;
-    @NonNull
     private String address;
-    @NonNull
     private String number;
     private String complement;
 }

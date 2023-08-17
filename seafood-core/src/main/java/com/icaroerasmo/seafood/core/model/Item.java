@@ -14,7 +14,6 @@ import java.time.Instant;
 public class Item {
     @Id
     private String id;
-    @NonNull
     private String description;
     @CreatedDate
     private Instant createdAt;

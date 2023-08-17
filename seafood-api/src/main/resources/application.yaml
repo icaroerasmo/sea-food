@@ -14,13 +14,13 @@ spring:
     producer:
       bootstrap-servers: 127.0.0.1:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       group-id: group_id
 logging:
   pattern:
     level:
-      root: error
+      root: debug
       com.icaroerasmo.seafood: info
-      org.springframework: error
+      org.springframework: debug
 
 auto.create.topics.enable: true

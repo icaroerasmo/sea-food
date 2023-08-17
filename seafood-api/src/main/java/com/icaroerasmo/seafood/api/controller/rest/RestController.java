@@ -3,23 +3,21 @@ package com.icaroerasmo.seafood.api.controller.rest;
 import com.icaroerasmo.seafood.api.service.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public abstract class RestController<T> {
+
     @Autowired
     protected Service<T> service;
 
     @PostMapping
-    public Mono<T> save(T t) {
+    public Mono<T> save(@RequestBody T t) {
         return service.save(t);
     }
     @DeleteMapping
-    public Mono<Void> delete(T t) {
+    public Mono<Void> delete(@RequestBody T t) {
         return service.delete(t);
     }
     @GetMapping("/{id}")

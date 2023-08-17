@@ -17,10 +17,10 @@ public class Sell {
     @Id
     private String id;
     @DBRef
-    @NonNull
+    
     private Store store;
     @DBRef
-    @NonNull
+    
     private User buyer;
     @DBRef
     private List<Item> items;

@@ -8,18 +8,13 @@ import java.util.List;
 
 @Data
 public abstract class Person {
-    @NonNull
+    
     protected String name;
-    @NonNull
     @Indexed(unique = true)
     protected String documentNo;
-    @NonNull
     @Indexed(unique = true)
     protected String email;
-    @NonNull
     protected String phone;
-    @NonNull
     protected PersonType personType;
-    @NonNull
     protected List<Address> addresses;
 }
