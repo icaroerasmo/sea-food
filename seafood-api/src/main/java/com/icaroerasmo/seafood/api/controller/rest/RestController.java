@@ -26,8 +26,4 @@ public abstract class RestController<T> {
     public Mono<T> findById(@PathVariable String id) {
         return service.findById(id);
     }
-    @GetMapping
-    public Flux<T> findAll() {
-        return service.findAll();
-    }
 }
