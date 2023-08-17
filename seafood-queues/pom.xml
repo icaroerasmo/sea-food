@@ -6,31 +6,13 @@
         <artifactId>seafood</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>seafood-api</artifactId>
-    <name>Seafood - api</name>
+    <artifactId>seafood-queues</artifactId>
+    <name>Seafood - queues</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-graphql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.graphql</groupId>
-            <artifactId>spring-graphql-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-extended-scalars</artifactId>
-            <version>20.2</version>
         </dependency>
         <dependency>
             <groupId>com.icaroerasmo</groupId>
