@@ -13,7 +13,7 @@ public abstract class Service<T> {
     @Autowired
     protected ReactiveMongoRepository<T, String> repository;
     @Autowired
-    private KafkaProducerService producerService;
+    private KafkaService producerService;
 
     public Mono<T> save(@Validated T t) {
         producerService.send(KafkaOperation.SAVE, t);
