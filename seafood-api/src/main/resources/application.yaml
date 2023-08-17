@@ -10,9 +10,17 @@ spring:
       path: /view/graphiql
       endpoint: ${spring.graphql.path}
       enabled: true
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      group-id: group_id
 logging:
   pattern:
     level:
       root: error
       com.icaroerasmo.seafood: info
       org.springframework: error
+
+auto.create.topics.enable: true

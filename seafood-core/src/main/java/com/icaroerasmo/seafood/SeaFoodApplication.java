@@ -12,9 +12,6 @@ import java.util.Arrays;
 @EnableReactiveMongoRepositories
 public class SeaFoodApplication {
 
-	@Autowired
-	private UserRepository userRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(SeaFoodApplication.class, args);
 	}

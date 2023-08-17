@@ -1,4 +1,4 @@
-package com.icaroerasmo.seafood.config;
+package com.icaroerasmo.seafood.api.config;
 
 import com.icaroerasmo.seafood.core.enums.PersonType;
 import com.icaroerasmo.seafood.core.model.Person;
