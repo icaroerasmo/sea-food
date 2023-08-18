@@ -17,8 +17,6 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: com.icaroerasmo.seafood.core.util.KafkaDeserializer
-#      properties:
-#        spring.json.trusted.packages: "com.icaroerasmo.seafood.core.dto"
     producer:
       bootstrap-servers: 127.0.0.1:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
