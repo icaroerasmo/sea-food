@@ -15,7 +15,7 @@ import java.util.UUID;
 public class KafkaService {
 
     @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
 
     public <T> void send(KafkaOperation operation, T t){
         final UUID uuid = UUID.randomUUID();
