@@ -19,10 +19,6 @@ public class KafkaResponseManager {
         return lock;
     }
 
-    public Object getLock(String uuid) {
-        return locks.get(uuid);
-    }
-
     public void save(KafkaMessageDTO<?> message) {
         final Object lock = locks.get(message.getUuid());
         synchronized(lock) {

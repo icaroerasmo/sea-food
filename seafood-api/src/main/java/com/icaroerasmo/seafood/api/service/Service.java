@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Log4j2
 public abstract class Service<T> {
 
@@ -19,16 +21,20 @@ public abstract class Service<T> {
     private KafkaService producerService;
 
     public Mono<T> save(@Validated T t) throws Exception {
-        final String uuid = producerService.send(KafkaOperation.SAVE, t);
-        final Object lock = responseManager.getLock(uuid);
+
+        final String uuid = UUID.randomUUID().toString();
+        final Object lock = responseManager.createLock(uuid);
+
         synchronized(lock) {
+            producerService.send(uuid, KafkaOperation.SAVE, t);
             lock.wait();
         }
+
         return Mono.just(responseManager.retrieve(uuid));
     }
 
     public Mono<Void> delete(@Validated T t) {
-        producerService.send(KafkaOperation.DELETE, t);
+        producerService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
         return Mono.empty();
     }
 
