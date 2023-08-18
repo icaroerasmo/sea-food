@@ -1,0 +1,51 @@
+package com.icaroerasmo.seafood.api.kafka;
+
+import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Component
+public class KafkaResponseManager {
+    private Map<String, Object> locks = new HashMap<>();
+    private List<KafkaMessageDTO<?>> messages = new ArrayList<>();
+
+    public Object createLock(String uuid) {
+        Object lock = new Object();
+        locks.put(uuid, lock);
+        return lock;
+    }
+
+    public Object getLock(String uuid) {
+        return locks.get(uuid);
+    }
+
+    public void save(KafkaMessageDTO<?> message) {
+        final Object lock = locks.get(message.getUuid());
+        synchronized(lock) {
+            messages.add(message);
+            lock.notify();
+        }
+    }
+
+    public <T> T retrieve(String uuid) {
+
+        final Object lock = locks.get(uuid);
+
+        KafkaMessageDTO<T> message = null;
+
+        synchronized(lock) {
+            message = (KafkaMessageDTO<T>) messages.stream().
+                    filter(m -> m.getUuid().equals(uuid)).
+                    findFirst().orElseThrow(
+                            () -> new RuntimeException("not found"));
+            messages.remove(message);
+            locks.remove(uuid);
+            lock.notify();
+        }
+        return message.getPayload();
+    }
+}

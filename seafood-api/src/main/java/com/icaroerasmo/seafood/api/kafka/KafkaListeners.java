@@ -15,14 +15,14 @@ public class KafkaListeners {
 
     @Autowired
     private ApplicationContext context;
-
+    @Autowired
+    private KafkaResponseManager responseManager;
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
 
     @KafkaListener(id = "${spring.kafka.producer.group-id}", topics = Constants.KAFKA_OUTPUT_QUEUE)
     public <T> void outputListener(KafkaMessageDTO<T> message) throws Exception {
-
         log.info("Message {} received", message);
-
+        responseManager.save(message);
     }
 }

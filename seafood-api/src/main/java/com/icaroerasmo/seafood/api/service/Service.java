@@ -1,5 +1,6 @@
 package com.icaroerasmo.seafood.api.service;
 
+import com.icaroerasmo.seafood.api.kafka.KafkaResponseManager;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,17 @@ public abstract class Service<T> {
     @Autowired
     protected ReactiveMongoRepository<T, String> repository;
     @Autowired
+    private KafkaResponseManager responseManager;
+    @Autowired
     private KafkaService producerService;
 
-    public Mono<T> save(@Validated T t) {
-        producerService.send(KafkaOperation.SAVE, t);
-        return Mono.just(t);
+    public Mono<T> save(@Validated T t) throws Exception {
+        final String uuid = producerService.send(KafkaOperation.SAVE, t);
+        final Object lock = responseManager.getLock(uuid);
+        synchronized(lock) {
+            lock.wait();
+        }
+        return Mono.just(responseManager.retrieve(uuid));
     }
 
     public Mono<Void> delete(@Validated T t) {

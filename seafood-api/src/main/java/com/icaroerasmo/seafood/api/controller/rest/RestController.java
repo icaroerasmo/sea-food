@@ -13,7 +13,7 @@ public abstract class RestController<T> {
     protected Service<T> service;
 
     @PostMapping
-    public Mono<T> save(@RequestBody T t) {
+    public Mono<T> save(@RequestBody T t) throws Exception {
         return service.save(t);
     }
     @DeleteMapping
