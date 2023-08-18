@@ -1,10 +1,13 @@
 package com.icaroerasmo.seafood.core.dto;
 
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@NoArgsConstructor
 public class KafkaMessageDTO<T> {
     private String uuid;
     private T payload;

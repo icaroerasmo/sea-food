@@ -5,6 +5,14 @@ spring:
       uri: "mongodb://mongoadmin:secret@localhost:27017/seafood?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin"
       auto-index-creation: true
   kafka:
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.icaroerasmo.seafood.core.util.KafkaDeserializer
+#      properties:
+#        spring.json.trusted.packages: "com.icaroerasmo.seafood.core.dto"
     producer:
       bootstrap-servers: 127.0.0.1:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

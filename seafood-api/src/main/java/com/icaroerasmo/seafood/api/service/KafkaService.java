@@ -20,5 +20,6 @@ public class KafkaService {
     public <T> void send(KafkaOperation operation, T t){
         final UUID uuid = UUID.randomUUID();
         kafkaTemplate.send(Constants.KAFKA_INPUT_QUEUE, new KafkaMessageDTO<>(uuid.toString(), t, operation));
+        log.info("Message {} sent to consumer", t);
     }
 }
