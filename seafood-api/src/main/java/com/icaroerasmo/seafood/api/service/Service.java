@@ -34,7 +34,10 @@ public abstract class Service<T extends DocumentBase> {
     }
     public Mono<String> delete(@Validated String id) throws Exception {
         return repository.findById(id)
-                .switchIfEmpty(Mono.error(new DataInconsistencyException("Document not found for ID: "+ id)))
+                .switchIfEmpty(
+                        Mono.error(
+                                new DataInconsistencyException("Document not found for ID: "+ id)
+                        ))
                 .map(t -> {
                     try {
                         kafkaService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
