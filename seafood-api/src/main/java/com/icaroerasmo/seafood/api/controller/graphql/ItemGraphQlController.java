@@ -10,14 +10,16 @@ import reactor.core.publisher.Mono;
 
 @Controller
 public class ItemGraphQlController extends GraphQlController<Item> {
-
     @QueryMapping
     public Mono<Item> findItemById(@Argument String id) {
         return service.findById(id);
     }
-
     @QueryMapping
     public Flux<Item> findAllItemsByDescriptionPrefix(@Argument String descriptionPrefix) {
         return ((ItemService) service).findAllItemsByDescriptionPrefix(descriptionPrefix);
+    }
+    @QueryMapping
+    public Flux<Item> findAllItemsByStoreId(@Argument String storeId) {
+        return ((ItemService) service).findAllItemsByStoreId(storeId);
     }
 }

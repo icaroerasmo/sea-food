@@ -1,5 +1,7 @@
 package com.icaroerasmo.seafood.api.kafka;
 
+import com.icaroerasmo.seafood.api.exceptions.DataInconsistencyException;
+import com.icaroerasmo.seafood.api.exceptions.KafkaMessagesException;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +29,13 @@ public class KafkaResponseManager {
         }
     }
 
-    public <T> T retrieve(String uuid) {
+    public <T> T retrieve(String uuid) throws Exception {
         final Object lock = locks.get(uuid);
         final KafkaMessageDTO<T> message =
                 (KafkaMessageDTO<T>) messages.stream().
                 filter(m -> m.getUuid().equals(uuid)).
                 findFirst().orElseThrow(
-                        () -> new RuntimeException("not found"));
+                        () -> new KafkaMessagesException("Failed retrieving message from Kafka"));
 
         synchronized(lock) {
             messages.remove(message);

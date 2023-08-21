@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document(collection = "store")
 public class Store extends DocumentBase {
+    private Long score;
     @DBRef
     private LegalEntity storeInfo;
-    private Long score;
 }

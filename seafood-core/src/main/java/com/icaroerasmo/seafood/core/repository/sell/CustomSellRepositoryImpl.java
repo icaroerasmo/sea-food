@@ -11,22 +11,13 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class CustomSellRepositoryImpl implements CustomSellRepository {
-
     @Autowired
     private ReactiveMongoTemplate mongoTemplate;
-
-    @Override
-    public Mono<Sell> findSellById(String id) {
-        Query query = new Query(Criteria.where("id").is(id));
-        return mongoTemplate.findOne(query, Sell.class);
-    }
-
     @Override
     public Flux<Sell> findAllSellsByUserId(String id) {
         Query query = new Query(Criteria.where("user.id").is(id));
         return mongoTemplate.find(query, Sell.class);
     }
-
     @Override
     public Flux<Sell> findAllSellsByStoreId(String id) {
         Query query = new Query(Criteria.where("store.id").is(id));

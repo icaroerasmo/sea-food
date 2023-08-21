@@ -5,4 +5,5 @@ import reactor.core.publisher.Flux;
 
 public interface CustomItemRepository {
     Flux<Item> findAllItemsByDescriptionPrefix(String descriptionPrefix);
+    Flux<Item> findAllItemsByStoreId(String storeId);
 }

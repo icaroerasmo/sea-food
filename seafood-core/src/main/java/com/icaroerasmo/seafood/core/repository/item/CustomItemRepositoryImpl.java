@@ -5,6 +5,8 @@ import com.icaroerasmo.seafood.core.model.Store;
 import com.icaroerasmo.seafood.core.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Flux;
 
 public class CustomItemRepositoryImpl implements CustomItemRepository {
@@ -20,5 +22,11 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
         }
 
         return mongoTemplate.find(QueryUtil.queryByPrefix("description", descriptionPrefix), Item.class);
+    }
+
+    @Override
+    public Flux<Item> findAllItemsByStoreId(String storeId) {
+        final Query query = new Query(Criteria.where("store.id").is(storeId));
+        return mongoTemplate.find(query, Item.class);
     }
 }

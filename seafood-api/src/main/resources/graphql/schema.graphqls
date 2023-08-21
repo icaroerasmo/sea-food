@@ -48,6 +48,7 @@ type Query {
     findAllSellsByStoreId(id: ID): [Sell]
     findAllStoresByNamePrefix(namePrefix: String): [Store]
     findAllItemsByDescriptionPrefix(descriptionPrefix: String): [Item]
+    findAllItemsByStoreId(id: ID): [Item]
     findUserById(id: ID): User
     findSellById(id: ID): Sell
     findStoreById(id: ID): Store
