@@ -29,7 +29,7 @@ public class StoreGraphQlController extends GraphQlController<Store> {
         return service.save(store);
     }
     @MutationMapping
-    public Mono<String> deleteStore(@Argument String storeId) throws Exception {
+    public Mono<Store> deleteStore(@Argument String storeId) throws Exception {
         return service.delete(storeId);
     }
 }

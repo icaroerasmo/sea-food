@@ -1,6 +1,7 @@
 package com.icaroerasmo.seafood.api.controller.graphql;
 
 import com.icaroerasmo.seafood.api.service.SellService;
+import com.icaroerasmo.seafood.core.model.Item;
 import com.icaroerasmo.seafood.core.model.Sell;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -31,7 +32,7 @@ public class SellGraphQlController extends GraphQlController<Sell> {
         return service.save(sell);
     }
     @MutationMapping
-    public Mono<String> deleteSell(@Argument String sellId) throws Exception {
+    public Mono<Sell> deleteSell(@Argument String sellId) throws Exception {
         return service.delete(sellId);
     }
 }

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class DocumentBase {
+public class DocumentBase {
     @Id
     protected String id;
     @CreatedDate

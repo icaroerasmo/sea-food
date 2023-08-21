@@ -33,7 +33,7 @@ public abstract class Service<T extends DocumentBase> {
         }
         return Mono.just(responseManager.retrieve(uuid));
     }
-    public Mono<String> delete(String id) throws Exception {
+    public Mono<T> delete(String id) throws Exception {
         return repository.findById(id)
                 .switchIfEmpty(
                         Mono.error(
@@ -41,7 +41,7 @@ public abstract class Service<T extends DocumentBase> {
                         ))
                 .map(t -> {
                     kafkaService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
-                    return id;
+                    return (T) new DocumentBase(id, null, null);
                 });
     }
     public Mono<T> findById(String id) {

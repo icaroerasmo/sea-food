@@ -26,7 +26,7 @@ public class UserGraphQlController extends GraphQlController<User> {
         return service.save(user);
     }
     @MutationMapping
-    public Mono<String> deleteUser(@Argument String userId) throws Exception {
+    public Mono<User> deleteUser(@Argument String userId) throws Exception {
         return service.delete(userId);
     }
 }

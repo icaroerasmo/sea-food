@@ -14,8 +14,8 @@ public abstract class RestController<T extends DocumentBase> {
     public Mono<T> save(@Valid @RequestBody T t) throws Exception {
         return service.save(t);
     }
-    @DeleteMapping
-    public Mono<String> delete(@RequestBody String id) throws Exception {
+    @DeleteMapping("/{id}")
+    public Mono<T> delete(@PathVariable String id) throws Exception {
         return service.delete(id);
     }
     @GetMapping("/{id}")

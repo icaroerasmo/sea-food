@@ -30,7 +30,7 @@ public class ItemGraphQlController extends GraphQlController<Item> {
         return service.save(item);
     }
     @MutationMapping
-    public Mono<String> deleteItem(@Argument String itemId) throws Exception {
+    public Mono<Item> deleteItem(@Argument String itemId) throws Exception {
         return service.delete(itemId);
     }
 }
