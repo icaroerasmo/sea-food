@@ -14,13 +14,11 @@ import java.util.UUID;
 @Log4j2
 @Service
 public class KafkaService {
-
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
     @Autowired
     private KafkaResponseManager responseManager;
-
-    public <T> void send(String uuid, KafkaOperation operation, T t) throws Exception {
+    public <T> void send(String uuid, KafkaOperation operation, T t) {
         kafkaTemplate.send(Constants.KAFKA_INPUT_QUEUE, new KafkaMessageDTO<>(uuid, t, operation));
         log.info("Message {} sent to consumer", t);
     }

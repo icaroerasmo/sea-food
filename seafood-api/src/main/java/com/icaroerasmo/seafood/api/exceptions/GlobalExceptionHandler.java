@@ -18,4 +18,9 @@ public class GlobalExceptionHandler {
         final HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(status).body(new ErrorMessageDTO(status.value(), exception.getMessage()));
     }
+    @ExceptionHandler(DataNotFoundException.class)
+    ResponseEntity<ErrorMessageDTO> dataNotFoundException(DataNotFoundException exception) {
+        final HttpStatus status = HttpStatus.NOT_FOUND;
+        return ResponseEntity.status(status).body(new ErrorMessageDTO(status.value(), exception.getMessage()));
+    }
 }

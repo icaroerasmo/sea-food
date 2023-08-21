@@ -1,6 +1,7 @@
 package com.icaroerasmo.seafood.api.service;
 
 import com.icaroerasmo.seafood.api.exceptions.DataInconsistencyException;
+import com.icaroerasmo.seafood.api.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.api.kafka.KafkaResponseManager;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
@@ -36,22 +37,16 @@ public abstract class Service<T extends DocumentBase> {
         return repository.findById(id)
                 .switchIfEmpty(
                         Mono.error(
-                                new DataInconsistencyException("Document not found for ID: "+ id)
+                                new DataNotFoundException("Document not found for ID: "+ id)
                         ))
                 .map(t -> {
-                    try {
-                        kafkaService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
+                    kafkaService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
                     return id;
                 });
     }
     public Mono<T> findById(String id) {
-        return repository.findById(id)
-                .switchIfEmpty(
-                Mono.error(
-                        new DataInconsistencyException("Document not found for ID: "+ id)
-                ));
+        return repository.findById(id).switchIfEmpty(
+                Mono.error(new DataNotFoundException(
+                        "Document not found for ID: "+ id)));
     }
 }
