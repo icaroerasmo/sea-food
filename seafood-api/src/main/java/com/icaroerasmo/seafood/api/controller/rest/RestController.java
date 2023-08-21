@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 public abstract class RestController<T extends DocumentBase> {
-
     @Autowired
     protected Service<T> service;
-
     @PostMapping
     public Mono<T> save(@Valid @RequestBody T t) throws Exception {
         return service.save(t);
