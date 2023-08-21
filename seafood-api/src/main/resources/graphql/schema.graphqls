@@ -1,4 +1,5 @@
 scalar Long
+scalar LocalDateTime
 enum AddressType {
     AVENUE
     STREET
@@ -25,22 +26,30 @@ type Person {
 type Item {
     id: String
     description: String
+    createdAt: LocalDateTime
+    updatedAt: LocalDateTime
 }
 type Store {
     id: String
     storeInfo: Person
     score: Long
+    createdAt: LocalDateTime
+    updatedAt: LocalDateTime
 }
 type Sell {
     id: String
     store: Store
     buyer: User
     items: [Item]
+    createdAt: LocalDateTime
+    updatedAt: LocalDateTime
 }
 type User {
     id: String
     password: String
     userInfo: Person
+    createdAt: LocalDateTime
+    updatedAt: LocalDateTime
 }
 input UserInput {
     id: String
