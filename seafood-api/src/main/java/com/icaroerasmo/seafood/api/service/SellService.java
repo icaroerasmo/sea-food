@@ -43,7 +43,7 @@ public class SellService extends Service<Sell> {
                 });
     }
     @Override
-    public Mono<Sell> save(@Validated Sell sell) throws Exception {
+    public Mono<Sell> save(Sell sell) throws Exception {
         if(sell.getItems().stream().
                 anyMatch(item -> !item.getStore().
                         getId().equals(sell.

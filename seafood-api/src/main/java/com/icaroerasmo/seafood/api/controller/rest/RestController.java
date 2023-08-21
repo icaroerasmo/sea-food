@@ -2,6 +2,7 @@ package com.icaroerasmo.seafood.api.controller.rest;
 
 import com.icaroerasmo.seafood.api.service.Service;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -12,7 +13,7 @@ public abstract class RestController<T extends DocumentBase> {
     protected Service<T> service;
 
     @PostMapping
-    public Mono<T> save(@RequestBody T t) throws Exception {
+    public Mono<T> save(@Valid @RequestBody T t) throws Exception {
         return service.save(t);
     }
     @DeleteMapping

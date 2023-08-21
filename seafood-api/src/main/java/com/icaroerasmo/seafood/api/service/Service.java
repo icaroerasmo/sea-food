@@ -24,7 +24,7 @@ public abstract class Service<T extends DocumentBase> {
     private KafkaResponseManager responseManager;
     @Autowired
     private KafkaService kafkaService;
-    public Mono<T> save(@Validated T t) throws Exception {
+    public Mono<T> save(T t) throws Exception {
         final String uuid = UUID.randomUUID().toString();
         final Object lock = responseManager.createLock(uuid);
         synchronized(lock) {
@@ -33,7 +33,7 @@ public abstract class Service<T extends DocumentBase> {
         }
         return Mono.just(responseManager.retrieve(uuid));
     }
-    public Mono<String> delete(@Validated String id) throws Exception {
+    public Mono<String> delete(String id) throws Exception {
         return repository.findById(id)
                 .switchIfEmpty(
                         Mono.error(

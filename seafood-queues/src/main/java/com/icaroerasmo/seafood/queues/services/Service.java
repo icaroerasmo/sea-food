@@ -13,11 +13,11 @@ public abstract class Service<T> {
     @Autowired
     protected ReactiveMongoRepository<T, String> repository;
 
-    public Mono<T> save(@Validated T t) {
+    public Mono<T> save(T t) {
         return repository.save(t);
     }
 
-    public Mono<Void> delete(@Validated T t) {
+    public Mono<Void> delete(T t) {
         return repository.delete(t);
     }
 }
