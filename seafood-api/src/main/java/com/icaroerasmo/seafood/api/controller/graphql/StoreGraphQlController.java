@@ -2,11 +2,15 @@ package com.icaroerasmo.seafood.api.controller.graphql;
 
 import com.icaroerasmo.seafood.api.service.StoreService;
 import com.icaroerasmo.seafood.core.model.Store;
+import com.icaroerasmo.seafood.core.model.User;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class StoreGraphQlController extends GraphQlController<Store> {
@@ -19,5 +23,13 @@ public class StoreGraphQlController extends GraphQlController<Store> {
     @QueryMapping
     public Flux<Store> findAllStoresByNamePrefix(@Argument String namePrefix) {
         return ((StoreService) service).findAllStoresByNamePrefix(namePrefix);
+    }
+    @MutationMapping
+    public Mono<Store> saveStore(@Argument Store store) throws Exception {
+        return service.save(store);
+    }
+    @MutationMapping
+    public Mono<String> deleteStore(@Argument String storeId) throws Exception {
+        return service.delete(storeId);
     }
 }

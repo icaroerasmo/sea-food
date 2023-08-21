@@ -23,8 +23,8 @@ type Person {
     addresses: [Address]
 }
 type Item {
-    id: [String]
-    description: [String]
+    id: String
+    description: String
 }
 type Store {
     id: String
@@ -42,6 +42,41 @@ type User {
     password: String
     userInfo: Person
 }
+input UserInput {
+    id: String
+    password: String
+    userInfo: PersonInput
+}
+input PersonInput {
+    name: String
+    documentNo: String
+    email: String
+    phone: String
+    personType: PersonType
+    addresses: [AddressInput]
+}
+input AddressInput {
+    addressType: AddressType
+    address: String
+    number: String
+    complement: String
+}
+input SellInput {
+    id: String
+    store: StoreInput
+    buyer: UserInput
+    items: [ItemInput]
+}
+input StoreInput {
+    id: String
+    storeInfo: PersonInput
+    score: Long
+}
+input ItemInput {
+    id: String
+    description: String
+}
+
 type Query {
     findAllUsersByNamePrefix(namePrefix: String): [User]
     findAllSellsByUserId(id: ID): [Sell]
@@ -53,4 +88,14 @@ type Query {
     findSellById(id: ID): Sell
     findStoreById(id: ID): Store
     findItemById(id: ID): Item
+}
+type Mutation {
+    saveUser(user: UserInput): User
+    saveSell(sell: SellInput): Sell
+    saveStore(store: StoreInput): Store
+    saveItem(item: ItemInput): Item
+    deleteUser(userId: ID): ID
+    deleteSell(sellId: ID): ID
+    deleteStore(storeId: ID): ID
+    deleteItem(itemId: ID): ID
 }

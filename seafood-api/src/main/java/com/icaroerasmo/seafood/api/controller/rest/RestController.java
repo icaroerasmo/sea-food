@@ -1,13 +1,12 @@
 package com.icaroerasmo.seafood.api.controller.rest;
 
 import com.icaroerasmo.seafood.api.service.Service;
-import lombok.RequiredArgsConstructor;
+import com.icaroerasmo.seafood.core.model.DocumentBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public abstract class RestController<T> {
+public abstract class RestController<T extends DocumentBase> {
 
     @Autowired
     protected Service<T> service;
@@ -17,8 +16,8 @@ public abstract class RestController<T> {
         return service.save(t);
     }
     @DeleteMapping
-    public Mono<Void> delete(@RequestBody T t) throws Exception {
-        return service.delete(t);
+    public Mono<String> delete(@RequestBody String id) throws Exception {
+        return service.delete(id);
     }
     @GetMapping("/{id}")
     public Mono<T> findById(@PathVariable String id) {
