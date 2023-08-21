@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
+import org.springframework.data.mongodb.config.EnableReactiveMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.web.reactive.config.EnableWebFlux;
@@ -23,8 +24,8 @@ import java.util.concurrent.ExecutionException;
 @Log4j2
 @EnableKafka
 @EnableWebFlux
-@EnableMongoAuditing
 @SpringBootApplication
+@EnableReactiveMongoAuditing
 @EnableReactiveMongoRepositories
 public class SeaFoodApplication {
 

@@ -10,6 +10,8 @@ spring:
       path: /view/graphiql
       endpoint: ${spring.graphql.path}
       enabled: true
+  jackson:
+    date-format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
   kafka:
     consumer:
       bootstrap-servers: 127.0.0.1:9092

@@ -14,13 +14,10 @@ import org.springframework.stereotype.Component;
 @Log4j2
 @Component
 public class KafkaListeners {
-
     @Autowired
     private ApplicationContext context;
-
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
-
     @KafkaListener(id = "${spring.kafka.producer.group-id}", topics = Constants.KAFKA_INPUT_QUEUE)
     public <T> void inputListener(KafkaMessageDTO<T> message) throws Exception {
 
