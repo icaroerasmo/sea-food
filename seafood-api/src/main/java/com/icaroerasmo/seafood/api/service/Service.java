@@ -18,23 +18,16 @@ public abstract class Service<T> {
     @Autowired
     private KafkaResponseManager responseManager;
     @Autowired
-    private KafkaService producerService;
+    private KafkaService kafkaService;
 
     public Mono<T> save(@Validated T t) throws Exception {
-
         final String uuid = UUID.randomUUID().toString();
-        final Object lock = responseManager.createLock(uuid);
-
-        synchronized(lock) {
-            producerService.send(uuid, KafkaOperation.SAVE, t);
-            lock.wait();
-        }
-
+        kafkaService.send(uuid, KafkaOperation.SAVE, t);
         return Mono.just(responseManager.retrieve(uuid));
     }
 
-    public Mono<Void> delete(@Validated T t) {
-        producerService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
+    public Mono<Void> delete(@Validated T t) throws Exception {
+        kafkaService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
         return Mono.empty();
     }
 

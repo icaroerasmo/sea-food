@@ -16,9 +16,7 @@ import java.time.Instant;
 public class User {
     @Id
     private String id;
-    
     private String password;
-    
     private Person userInfo;
     @CreatedDate
     private Instant createdAt;

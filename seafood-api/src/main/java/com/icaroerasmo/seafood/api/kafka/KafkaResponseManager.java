@@ -28,20 +28,19 @@ public class KafkaResponseManager {
     }
 
     public <T> T retrieve(String uuid) {
-
         final Object lock = locks.get(uuid);
-
-        KafkaMessageDTO<T> message = null;
+        final KafkaMessageDTO<T> message =
+                (KafkaMessageDTO<T>) messages.stream().
+                filter(m -> m.getUuid().equals(uuid)).
+                findFirst().orElseThrow(
+                        () -> new RuntimeException("not found"));
 
         synchronized(lock) {
-            message = (KafkaMessageDTO<T>) messages.stream().
-                    filter(m -> m.getUuid().equals(uuid)).
-                    findFirst().orElseThrow(
-                            () -> new RuntimeException("not found"));
             messages.remove(message);
             locks.remove(uuid);
             lock.notify();
         }
+
         return message.getPayload();
     }
 }

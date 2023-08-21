@@ -17,7 +17,7 @@ public abstract class RestController<T> {
         return service.save(t);
     }
     @DeleteMapping
-    public Mono<Void> delete(@RequestBody T t) {
+    public Mono<Void> delete(@RequestBody T t) throws Exception {
         return service.delete(t);
     }
     @GetMapping("/{id}")

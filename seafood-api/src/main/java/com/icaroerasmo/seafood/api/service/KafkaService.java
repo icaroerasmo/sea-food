@@ -17,9 +17,15 @@ public class KafkaService {
 
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
+    @Autowired
+    private KafkaResponseManager responseManager;
 
-    public <T> void send(String uuid, KafkaOperation operation, T t){
-        kafkaTemplate.send(Constants.KAFKA_INPUT_QUEUE, new KafkaMessageDTO<>(uuid, t, operation));
-        log.info("Message {} sent to consumer", t);
+    public <T> void send(String uuid, KafkaOperation operation, T t) throws Exception {
+        final Object lock = responseManager.createLock(uuid);
+        synchronized(lock) {
+            kafkaTemplate.send(Constants.KAFKA_INPUT_QUEUE, new KafkaMessageDTO<>(uuid, t, operation));
+            log.info("Message {} sent to consumer", t);
+            lock.wait();
+        }
     }
 }

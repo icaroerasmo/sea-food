@@ -6,7 +6,6 @@ import lombok.NonNull;
 
 @Data
 public class Address {
-    
     private AddressType addressType;
     private String address;
     private String number;
