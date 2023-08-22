@@ -4,9 +4,11 @@ import com.icaroerasmo.seafood.core.enums.AddressType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
+@NoArgsConstructor
 public class Address {
     @NotNull
     private AddressType addressType;

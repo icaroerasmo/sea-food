@@ -10,8 +10,8 @@ import org.springframework.lang.NonNull;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-public abstract class Person {
+@NoArgsConstructor
+public class Person {
     @NotEmpty
     protected String name;
     @NotEmpty

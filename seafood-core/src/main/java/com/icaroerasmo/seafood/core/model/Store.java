@@ -6,11 +6,12 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
+@NoArgsConstructor
 @Document(collection = "store")
 public class Store extends DocumentBase {
     @NotNull
     private Long score;
     @DBRef
     @NotNull
-    private LegalEntity storeInfo;
+    private Person storeInfo;
 }

@@ -1,5 +1,5 @@
 scalar Long
-scalar LocalDateTime
+scalar Instant
 enum AddressType {
     AVENUE
     STREET
@@ -26,30 +26,30 @@ type Person {
 type Item {
     id: String
     description: String
-    createdAt: LocalDateTime
-    updatedAt: LocalDateTime
+    createdAt: Instant
+    updatedAt: Instant
 }
 type Store {
     id: String
     storeInfo: Person
     score: Long
-    createdAt: LocalDateTime
-    updatedAt: LocalDateTime
+    createdAt: Instant
+    updatedAt: Instant
 }
 type Sell {
     id: String
     store: Store
     buyer: User
     items: [Item]
-    createdAt: LocalDateTime
-    updatedAt: LocalDateTime
+    createdAt: Instant
+    updatedAt: Instant
 }
 type User {
     id: String
     password: String
     userInfo: Person
-    createdAt: LocalDateTime
-    updatedAt: LocalDateTime
+    createdAt: Instant
+    updatedAt: Instant
 }
 input UserInput {
     id: String
@@ -103,8 +103,8 @@ type Mutation {
     saveSell(sell: SellInput): Sell
     saveStore(store: StoreInput): Store
     saveItem(item: ItemInput): Item
-    deleteUser(userId: ID): ID
-    deleteSell(sellId: ID): ID
-    deleteStore(storeId: ID): ID
-    deleteItem(itemId: ID): ID
+    deleteUser(userId: ID): User
+    deleteSell(sellId: ID): Sell
+    deleteStore(storeId: ID): Store
+    deleteItem(itemId: ID): Item
 }
