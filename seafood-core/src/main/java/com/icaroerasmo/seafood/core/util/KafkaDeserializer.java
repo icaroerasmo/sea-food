@@ -3,7 +3,6 @@ package com.icaroerasmo.seafood.core.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import org.apache.kafka.common.serialization.Deserializer;
@@ -16,7 +15,7 @@ public class KafkaDeserializer <T> implements Deserializer<KafkaMessageDTO<T>> {
     @Override
     public KafkaMessageDTO<T> deserialize(String s, byte[] bytes) {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
+        mapper.registerModule(new InstantDeserializerModule());
         JsonNode jsonMap = null;
 
         try {

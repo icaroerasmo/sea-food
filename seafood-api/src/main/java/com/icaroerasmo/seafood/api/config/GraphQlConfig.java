@@ -1,5 +1,6 @@
 package com.icaroerasmo.seafood.api.config;
 
+import com.icaroerasmo.seafood.core.util.Converter;
 import graphql.scalars.ExtendedScalars;
 import graphql.schema.*;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ public class GraphQlConfig {
                 .coercing(new Coercing<Instant, String>() {
                     @Override
                     public String serialize(Object input) {
-                        return DateTimeFormatter.ISO_INSTANT.format((Instant)input);
+                        return Converter.instantSerializer((Instant) input);
                     }
                 })
                 .build();
