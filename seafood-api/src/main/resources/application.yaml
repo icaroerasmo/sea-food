@@ -10,8 +10,6 @@ spring:
       path: /view/graphiql
       endpoint: ${spring.graphql.path}
       enabled: true
-  jackson:
-    timezone: "UTC"
   kafka:
     consumer:
       bootstrap-servers: 127.0.0.1:9092
