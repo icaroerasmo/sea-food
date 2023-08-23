@@ -1,16 +1,12 @@
-package com.icaroerasmo.seafood.api.service;
+package com.icaroerasmo.seafood.business.service;
 
-import com.icaroerasmo.seafood.api.exceptions.DataInconsistencyException;
-import com.icaroerasmo.seafood.api.exceptions.DataNotFoundException;
+import com.icaroerasmo.seafood.business.exceptions.DataInconsistencyException;
+import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.core.model.Sell;
-import com.icaroerasmo.seafood.core.model.Store;
 import com.icaroerasmo.seafood.core.repository.sell.SellRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

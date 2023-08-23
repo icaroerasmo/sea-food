@@ -1,20 +1,15 @@
-package com.icaroerasmo.seafood.api.service;
+package com.icaroerasmo.seafood.business.service;
 
-import com.icaroerasmo.seafood.api.exceptions.DataInconsistencyException;
-import com.icaroerasmo.seafood.api.exceptions.DataNotFoundException;
-import com.icaroerasmo.seafood.api.kafka.KafkaResponseManager;
+import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
+import com.icaroerasmo.seafood.business.kafka.KafkaResponseManager;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
-import com.icaroerasmo.seafood.core.model.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 @Log4j2
 public abstract class Service<T extends DocumentBase> {

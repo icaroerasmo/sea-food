@@ -1,6 +1,9 @@
 package com.icaroerasmo.seafood.api.exceptions;
 
 import com.icaroerasmo.seafood.api.dto.ErrorMessageDTO;
+import com.icaroerasmo.seafood.business.exceptions.DataInconsistencyException;
+import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
+import com.icaroerasmo.seafood.business.exceptions.KafkaMessagesException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.icaroerasmo.seafood.api.controller.rest;
 
-import com.icaroerasmo.seafood.api.service.Service;
+import com.icaroerasmo.seafood.business.service.Service;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

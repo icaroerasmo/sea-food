@@ -1,12 +1,11 @@
-package com.icaroerasmo.seafood.api.service;
+package com.icaroerasmo.seafood.business.service;
 
-import com.icaroerasmo.seafood.api.exceptions.DataNotFoundException;
+import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.core.model.Item;
 import com.icaroerasmo.seafood.core.repository.item.ItemRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @org.springframework.stereotype.Service
 public class ItemService extends Service<Item> {

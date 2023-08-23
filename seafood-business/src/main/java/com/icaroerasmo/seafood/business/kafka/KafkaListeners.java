@@ -1,4 +1,4 @@
-package com.icaroerasmo.seafood.api.kafka;
+package com.icaroerasmo.seafood.business.kafka;
 
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.Constants;

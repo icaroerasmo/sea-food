@@ -1,5 +1,7 @@
 package com.icaroerasmo.seafood.api.exceptions;
 
+import com.icaroerasmo.seafood.business.exceptions.DataInconsistencyException;
+import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
 import graphql.schema.DataFetchingEnvironment;

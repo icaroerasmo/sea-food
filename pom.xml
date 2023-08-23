@@ -12,7 +12,8 @@
         <module>seafood-core</module>
 		<module>seafood-api</module>
 		<module>seafood-queues</module>
-	</modules>
+        <module>seafood-business</module>
+    </modules>
     <properties>
 		<java.version>17</java.version>
 		<project.charset>UTF-8</project.charset>
@@ -110,6 +111,11 @@
 			<dependency>
 				<groupId>com.icaroerasmo</groupId>
 				<artifactId>seafood-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.icaroerasmo</groupId>
+				<artifactId>seafood-business</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

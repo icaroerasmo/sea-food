@@ -1,17 +1,13 @@
 package com.icaroerasmo.seafood.api.controller.graphql;
 
-import com.icaroerasmo.seafood.api.service.SellService;
-import com.icaroerasmo.seafood.core.model.Item;
+import com.icaroerasmo.seafood.business.service.SellService;
 import com.icaroerasmo.seafood.core.model.Sell;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class SellGraphQlController extends GraphQlController<Sell> {

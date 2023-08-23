@@ -1,7 +1,6 @@
-package com.icaroerasmo.seafood.api.kafka;
+package com.icaroerasmo.seafood.business.kafka;
 
-import com.icaroerasmo.seafood.api.exceptions.DataInconsistencyException;
-import com.icaroerasmo.seafood.api.exceptions.KafkaMessagesException;
+import com.icaroerasmo.seafood.business.exceptions.KafkaMessagesException;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.icaroerasmo.seafood.api.exceptions;
+package com.icaroerasmo.seafood.business.exceptions;
 
 public class KafkaMessagesException extends Exception {
     public KafkaMessagesException(String message) {

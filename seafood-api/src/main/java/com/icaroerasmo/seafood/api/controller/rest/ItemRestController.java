@@ -1,10 +1,7 @@
 package com.icaroerasmo.seafood.api.controller.rest;
 
-import com.icaroerasmo.seafood.api.service.ItemService;
-import com.icaroerasmo.seafood.api.service.StoreService;
+import com.icaroerasmo.seafood.business.service.ItemService;
 import com.icaroerasmo.seafood.core.model.Item;
-import com.icaroerasmo.seafood.core.model.Store;
-import com.icaroerasmo.seafood.core.util.QueryUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

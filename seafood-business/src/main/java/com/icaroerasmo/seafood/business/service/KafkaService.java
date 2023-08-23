@@ -1,6 +1,6 @@
-package com.icaroerasmo.seafood.api.service;
+package com.icaroerasmo.seafood.business.service;
 
-import com.icaroerasmo.seafood.api.kafka.KafkaResponseManager;
+import com.icaroerasmo.seafood.business.kafka.KafkaResponseManager;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.Constants;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Log4j2
 @Service

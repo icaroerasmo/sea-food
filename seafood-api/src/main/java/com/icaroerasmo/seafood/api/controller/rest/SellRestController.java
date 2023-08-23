@@ -1,14 +1,11 @@
 package com.icaroerasmo.seafood.api.controller.rest;
 
-import com.icaroerasmo.seafood.api.service.SellService;
-import com.icaroerasmo.seafood.api.service.Service;
+import com.icaroerasmo.seafood.business.service.SellService;
 import com.icaroerasmo.seafood.core.model.Sell;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @RequestMapping("/api/rest/sell")
 @org.springframework.web.bind.annotation.RestController
