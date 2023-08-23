@@ -1,4 +1,4 @@
-package com.icaroerasmo.seafood.api.graphql.dto;
+package com.icaroerasmo.seafood.api.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

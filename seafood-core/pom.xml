@@ -7,7 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>seafood-core</artifactId>
-    <name>Seafood - core</name>
+    <name>Seafood - Core</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

@@ -7,7 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>seafood-queues</artifactId>
-    <name>Seafood - queues</name>
+    <name>Seafood - Queues</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
