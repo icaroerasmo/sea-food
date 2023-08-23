@@ -1,0 +1,6 @@
+logging:
+  pattern:
+    level:
+      root: error
+      com.icaroerasmo.seafood: info
+      org.springframework: error
