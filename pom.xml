@@ -10,10 +10,11 @@
 	<description>Ifood but for sea food</description>
     <modules>
         <module>seafood-core</module>
-		<module>seafood-api</module>
+		<module>seafood-business</module>
+		<module>seafood-rest-api</module>
+		<module>seafood-graphql-api</module>
 		<module>seafood-queues</module>
-        <module>seafood-business</module>
-    </modules>
+	</modules>
     <properties>
 		<java.version>17</java.version>
 		<project.charset>UTF-8</project.charset>
