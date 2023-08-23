@@ -48,9 +48,9 @@ public class KafkaListeners {
                         kafkaTemplate.send(Constants.KAFKA_OUTPUT_QUEUE, message);
                     });
             case DELETE -> doOnError.apply(service.delete(payload)).
-                    subscribe((response) -> {
+                    doOnSuccess((response) -> {
                         kafkaTemplate.send(Constants.KAFKA_OUTPUT_QUEUE, message);
-                    });
+                    }).subscribe();
         }
     }
 

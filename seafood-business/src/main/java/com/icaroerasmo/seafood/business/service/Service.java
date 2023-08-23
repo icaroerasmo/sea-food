@@ -35,16 +35,14 @@ public abstract class Service<T extends DocumentBase> {
         return repository.findById(id)
                 .switchIfEmpty(Mono.error(new DataNotFoundException("Document not found for ID: "+ id)))
                 .doOnSuccess((t) -> {
-                    synchronized(lock) {
-                        try {
-                            kafkaService.send(UUID.randomUUID().toString(), KafkaOperation.DELETE, t);
+                    try {
+                        synchronized(lock) {
+                            kafkaService.send(uuid, KafkaOperation.DELETE, t);
                             lock.wait();
-
-                            responseManager.retrieve(uuid);
-
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
                         }
+                        responseManager.retrieve(uuid);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
                     }
                 });
     }
