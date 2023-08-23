@@ -3,9 +3,9 @@ package com.icaroerasmo.seafood.core.model;
 import com.icaroerasmo.seafood.core.enums.PersonType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 

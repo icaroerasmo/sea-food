@@ -2,8 +2,6 @@ package com.icaroerasmo.seafood.business.service;
 
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

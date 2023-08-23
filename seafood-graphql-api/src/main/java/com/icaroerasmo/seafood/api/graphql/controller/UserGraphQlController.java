@@ -2,7 +2,6 @@ package com.icaroerasmo.seafood.api.graphql.controller;
 
 import com.icaroerasmo.seafood.business.service.UserService;
 import com.icaroerasmo.seafood.core.model.User;
-import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;

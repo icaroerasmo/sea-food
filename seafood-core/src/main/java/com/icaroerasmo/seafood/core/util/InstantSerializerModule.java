@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 
 public class InstantSerializerModule extends SimpleModule {
     public InstantSerializerModule() {

@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 @Log4j2
 public abstract class Service<T extends DocumentBase> {
     @Autowired

@@ -1,14 +1,11 @@
 package com.icaroerasmo.seafood.core.repository.sell;
 
 import com.icaroerasmo.seafood.core.model.Sell;
-import com.icaroerasmo.seafood.core.model.Store;
-import com.icaroerasmo.seafood.core.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 public class CustomSellRepositoryImpl implements CustomSellRepository {
     @Autowired

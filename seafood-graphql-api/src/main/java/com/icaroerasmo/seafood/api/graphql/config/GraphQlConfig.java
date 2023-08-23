@@ -2,17 +2,13 @@ package com.icaroerasmo.seafood.api.graphql.config;
 
 import com.icaroerasmo.seafood.core.util.Converter;
 import graphql.scalars.ExtendedScalars;
-import graphql.schema.*;
+import graphql.schema.Coercing;
+import graphql.schema.GraphQLScalarType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 @Configuration
 public class GraphQlConfig {

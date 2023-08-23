@@ -1,7 +1,6 @@
 package com.icaroerasmo.seafood.core.repository.item;
 
 import com.icaroerasmo.seafood.core.model.Item;
-import com.icaroerasmo.seafood.core.model.Store;
 import com.icaroerasmo.seafood.core.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;

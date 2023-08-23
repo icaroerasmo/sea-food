@@ -11,7 +11,6 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 @Log4j2
 public class KafkaDeserializer <T> implements Deserializer<KafkaMessageDTO<T>> {

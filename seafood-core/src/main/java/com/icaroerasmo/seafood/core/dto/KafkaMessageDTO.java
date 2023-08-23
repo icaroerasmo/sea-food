@@ -1,7 +1,8 @@
 package com.icaroerasmo.seafood.core.dto;
 
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

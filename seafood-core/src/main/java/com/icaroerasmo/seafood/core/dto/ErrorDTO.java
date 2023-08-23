@@ -1,6 +1,5 @@
 package com.icaroerasmo.seafood.core.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
