@@ -1,6 +1,7 @@
 package com.icaroerasmo.seafood.business.kafka;
 
 import com.icaroerasmo.seafood.business.exceptions.KafkaMessagesException;
+import com.icaroerasmo.seafood.core.dto.ErrorDTO;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,9 @@ public class KafkaResponseManager {
 
     public void save(KafkaMessageDTO<?> message) {
         final Object lock = locks.get(message.getUuid());
+        if(lock == null) {
+            return;
+        }
         synchronized(lock) {
             messages.add(message);
             lock.notify();
@@ -40,6 +44,12 @@ public class KafkaResponseManager {
             messages.remove(message);
             locks.remove(uuid);
             lock.notify();
+        }
+
+        final ErrorDTO error = message.getError();
+
+        if(error != null) {
+            throw (Exception) error.getException();
         }
 
         return message.getPayload();
