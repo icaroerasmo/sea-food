@@ -93,6 +93,8 @@ type Query {
     findAllStoresByNamePrefix(namePrefix: String): [Store]
     findAllItemsByDescriptionPrefix(descriptionPrefix: String): [Item]
     findAllItemsByStoreId(id: ID): [Item]
+    findUserByDocumentNo(documentNo: String): User
+    findUserByEmail(email: String): User
     findUserById(id: ID): User
     findSellById(id: ID): Sell
     findStoreById(id: ID): Store
