@@ -32,7 +32,6 @@ public abstract class Service<T extends DocumentBase> {
     }
     public Mono<T> findById(String id) {
         return repository.findById(id).switchIfEmpty(
-                Mono.error(new DataNotFoundException(
-                        "Document not found for ID: "+ id)));
+                Mono.error(new DataNotFoundException("Document not found for ID: "+ id)));
     }
 }

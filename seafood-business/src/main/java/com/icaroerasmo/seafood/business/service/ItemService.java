@@ -18,13 +18,8 @@ public class ItemService extends Service<Item> {
         return storeRepository.
                 existsById(storeId).
                 flatMapMany(
-                        exists -> {
-                            if(exists) {
-                                return ((ItemRepository) repository).
-                                            findAllItemsByStoreId(storeId);
-                            }
-                            return Flux.error(new DataNotFoundException("Item not found for id "+ storeId));
-                        }
-                );
+                        exists -> exists ?
+                        ((ItemRepository) repository).findAllItemsByStoreId(storeId) :
+                            Flux.error(new DataNotFoundException("Item not found for id "+ storeId)));
     }
 }

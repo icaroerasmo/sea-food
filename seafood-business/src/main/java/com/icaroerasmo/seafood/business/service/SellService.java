@@ -19,24 +19,18 @@ public class SellService extends Service<Sell> {
     public Flux<Sell> findAllSellsByUserId(String userId) {
         return userRepository.
                 existsById(userId).
-                flatMapMany(exists -> {
-                    if(exists) {
-                        return ((SellRepository) repository).
-                                    findAllSellsByUserId(userId);
-                    }
-                    return Flux.error(new DataNotFoundException("User not found for id "+ userId));
-                });
+                flatMapMany(
+                        exists -> exists ?
+                                ((SellRepository) repository).findAllSellsByUserId(userId) :
+                                Flux.error(new DataNotFoundException("User not found for id "+ userId)));
     }
     public Flux<Sell> findAllSellsByStoreId(String storeId) {
         return storeRepository.
                 existsById(storeId).
-                flatMapMany(exists -> {
-                    if(exists) {
-                        return ((SellRepository) repository).
-                                    findAllSellsByStoreId(storeId);
-                    }
-                    return Flux.error(new DataNotFoundException("Store not found for id "+ storeId));
-                });
+                flatMapMany(
+                        exists -> exists ?
+                            ((SellRepository) repository).findAllSellsByStoreId(storeId) :
+                                Flux.error(new DataNotFoundException("Store not found for id "+ storeId)));
     }
     @Override
     public Mono<Sell> save(Sell sell) throws Exception {
