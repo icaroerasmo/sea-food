@@ -53,37 +53,37 @@ type User {
 }
 input UserInput {
     id: String
-    password: String
-    userInfo: PersonInput
+    password: String!
+    userInfo: PersonInput!
 }
 input PersonInput {
-    name: String
-    documentNo: String
-    email: String
-    phone: String
-    personType: PersonType
-    addresses: [AddressInput]
+    name: String!
+    documentNo: String!
+    email: String!
+    phone: String!
+    personType: PersonType!
+    addresses: [AddressInput]!
 }
 input AddressInput {
-    addressType: AddressType
-    address: String
-    number: String
+    addressType: AddressType!
+    address: String!
+    number: String!
     complement: String
 }
 input SellInput {
     id: String
-    store: StoreInput
-    buyer: UserInput
-    items: [ItemInput]
+    store: StoreInput!
+    buyer: UserInput!
+    items: [ItemInput]!
 }
 input StoreInput {
     id: String
-    storeInfo: PersonInput
+    storeInfo: PersonInput!
     score: Long
 }
 input ItemInput {
     id: String
-    description: String
+    description: String!
 }
 
 type Query {
