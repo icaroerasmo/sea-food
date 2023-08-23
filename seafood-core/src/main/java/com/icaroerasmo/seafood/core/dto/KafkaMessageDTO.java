@@ -17,8 +17,4 @@ public class KafkaMessageDTO<T> {
         this.clazz = (Class<T>) payload.getClass();
         this.operation = operation;
     }
-    public KafkaMessageDTO(String uuid, T payload, KafkaOperation operation, ErrorDTO error) {
-        this(uuid, payload, operation);
-        this.error = error;
-    }
 }

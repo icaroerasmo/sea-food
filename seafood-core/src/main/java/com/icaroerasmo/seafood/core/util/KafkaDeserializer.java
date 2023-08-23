@@ -7,11 +7,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icaroerasmo.seafood.core.dto.ErrorDTO;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+@Log4j2
 public class KafkaDeserializer <T> implements Deserializer<KafkaMessageDTO<T>> {
 
     @Override
@@ -39,19 +41,20 @@ public class KafkaDeserializer <T> implements Deserializer<KafkaMessageDTO<T>> {
             throw new RuntimeException(e);
         }
 
+        final KafkaMessageDTO<T> message = new KafkaMessageDTO<T>(uuid, payload, operation);
+
         final JsonNode error = jsonMap.get("error");
 
-        if(!error.isEmpty()) {
-            final String exceptionClassName = error.get("clazz").asText();
+        if(error != null) {
             try {
+                final String exceptionClassName = error.get("clazz").asText();
                 exception = (Exception) mapper.treeToValue(error.get("exception"), Class.forName(exceptionClassName));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                message.setError(new ErrorDTO(exception));
+            } catch (Exception e) {
+                log.warn("Tried to parse exception json and failed. Ignoring...");
             }
         }
 
-        return new KafkaMessageDTO<T>(uuid, payload, operation, new ErrorDTO(exception));
+        return message;
     }
 }

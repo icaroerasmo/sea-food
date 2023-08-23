@@ -1,5 +1,6 @@
 package com.icaroerasmo.seafood.core.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
@@ -11,6 +12,7 @@ public class KafkaSerializer <T> implements Serializer<KafkaMessageDTO<T>> {
     public byte[] serialize(String s, KafkaMessageDTO<T> tKafkaMessageDTO) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new InstantSerializerModule());
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
             return mapper.writeValueAsBytes(tKafkaMessageDTO);
         } catch (JsonProcessingException e) {
