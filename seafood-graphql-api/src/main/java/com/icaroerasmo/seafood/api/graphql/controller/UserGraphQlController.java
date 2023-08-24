@@ -1,5 +1,6 @@
 package com.icaroerasmo.seafood.api.graphql.controller;
 
+import com.icaroerasmo.seafood.business.dto.PasswordChangeDTO;
 import com.icaroerasmo.seafood.business.service.UserService;
 import com.icaroerasmo.seafood.core.model.User;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -30,6 +31,10 @@ public class UserGraphQlController extends GraphQlController<User> {
     @MutationMapping
     public Mono<User> saveUser(@Argument User user) throws Exception {
         return service.save(user);
+    }
+    @MutationMapping
+    public Mono<User> changePasswd(@Argument PasswordChangeDTO passwordChange) {
+        return ((UserService) service).changePassword(passwordChange);
     }
     @MutationMapping
     public Mono<User> deleteUser(@Argument String userId) throws Exception {

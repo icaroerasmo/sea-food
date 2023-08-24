@@ -4,6 +4,7 @@ import com.icaroerasmo.seafood.api.rest.dto.ErrorMessageDTO;
 import com.icaroerasmo.seafood.business.exceptions.DataInconsistencyException;
 import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.business.exceptions.KafkaMessagesException;
+import com.icaroerasmo.seafood.business.exceptions.PasswordNotChangedException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,12 @@ public class GlobalExceptionHandler {
     ResponseEntity<ErrorMessageDTO> dataNotFoundException(DataNotFoundException exception) {
         log.info("Data not found", exception);
         final HttpStatus status = HttpStatus.NOT_FOUND;
+        return ResponseEntity.status(status).body(new ErrorMessageDTO(status.value(), exception.getMessage()));
+    }
+    @ExceptionHandler(PasswordNotChangedException.class)
+    ResponseEntity<ErrorMessageDTO> passwordNotChangedException(PasswordNotChangedException exception) {
+        log.info("It was not possible to change password:", exception);
+        final HttpStatus status = HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(new ErrorMessageDTO(status.value(), exception.getMessage()));
     }
     @ExceptionHandler(Exception.class)

@@ -7,14 +7,11 @@ import reactor.core.publisher.Mono;
 
 @Log4j2
 public abstract class Service<T> {
-
     @Autowired
     protected ReactiveMongoRepository<T, String> repository;
-
     public Mono<T> save(T t) {
         return repository.save(t);
     }
-
     public Mono<Void> delete(T t) {
         return repository.delete(t);
     }

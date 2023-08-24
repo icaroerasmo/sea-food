@@ -1,10 +1,9 @@
 package com.icaroerasmo.seafood.api.rest.controller;
 
+import com.icaroerasmo.seafood.business.dto.PasswordChangeDTO;
 import com.icaroerasmo.seafood.business.service.UserService;
 import com.icaroerasmo.seafood.core.model.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -22,5 +21,9 @@ public class UserRestController extends RestController<User> {
     @GetMapping("/byNamePrefix/{namePrefix}")
     public Flux<User> findAllStoresByNamePrefix(@PathVariable String namePrefix) {
         return ((UserService) service).findAllUsersByNamePrefix(namePrefix);
+    }
+    @PostMapping("/changePassword")
+    public Mono<User> changePassword(@RequestBody PasswordChangeDTO changePassword) {
+        return ((UserService) service).changePassword(changePassword);
     }
 }

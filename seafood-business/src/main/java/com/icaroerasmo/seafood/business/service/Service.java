@@ -18,9 +18,12 @@ public abstract class Service<T extends DocumentBase> {
         return Mono.just(kafkaService.send(KafkaOperation.SAVE, t));
     }
     public Mono<T> delete(String id) throws Exception {
-        return repository.findById(id)
-                .switchIfEmpty(Mono.error(new DataNotFoundException("Document not found for ID: "+ id)))
-                .doOnSuccess((t) -> {
+        return repository.findById(id).
+                switchIfEmpty(
+                        Mono.error(
+                                new DataNotFoundException("Document not found for ID: "+ id)
+                        )).
+                doOnSuccess((t) -> {
                     try {
                         kafkaService.send(KafkaOperation.DELETE, t);
                     } catch (Exception e) {

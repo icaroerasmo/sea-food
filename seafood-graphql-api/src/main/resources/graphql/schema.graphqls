@@ -85,7 +85,11 @@ input ItemInput {
     id: String
     description: String!
 }
-
+input PasswordChangeInput {
+    userId: ID
+    oldPasswd: String!
+    newPasswd: String!
+}
 type Query {
     findAllUsersByNamePrefix(namePrefix: String): [User]
     findAllSellsByUserId(id: ID): [Sell]
@@ -102,6 +106,7 @@ type Query {
 }
 type Mutation {
     saveUser(user: UserInput): User
+    changePassword(passwordChange: PasswordChangeInput): User
     saveSell(sell: SellInput): Sell
     saveStore(store: StoreInput): Store
     saveItem(item: ItemInput): Item
