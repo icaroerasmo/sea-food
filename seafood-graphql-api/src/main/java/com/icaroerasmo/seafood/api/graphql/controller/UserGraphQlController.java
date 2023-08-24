@@ -33,7 +33,7 @@ public class UserGraphQlController extends GraphQlController<User> {
         return service.save(user);
     }
     @MutationMapping
-    public Mono<User> changePasswd(@Argument PasswordChangeDTO passwordChange) {
+    public Mono<User> changePassword(@Argument PasswordChangeDTO passwordChange) {
         return ((UserService) service).changePassword(passwordChange);
     }
     @MutationMapping
