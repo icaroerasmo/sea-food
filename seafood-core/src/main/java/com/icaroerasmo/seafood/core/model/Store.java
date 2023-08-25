@@ -3,7 +3,6 @@ package com.icaroerasmo.seafood.core.model;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -11,8 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "store")
 public class Store extends DocumentBase {
     @NotNull
-    private Long score;
-    @DBRef
+    private Float score;
     @NotNull
-    private Person storeInfo;
+    private User storeInfo;
 }
