@@ -1,6 +1,7 @@
 package com.icaroerasmo.seafood.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,6 +12,7 @@ import java.time.Instant;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DocumentBase {
     @Id
     protected String id;

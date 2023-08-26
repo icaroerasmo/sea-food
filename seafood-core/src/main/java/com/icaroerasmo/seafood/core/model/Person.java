@@ -1,5 +1,6 @@
 package com.icaroerasmo.seafood.core.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.icaroerasmo.seafood.core.enums.PersonType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Person {
     @NotEmpty
     protected String name;

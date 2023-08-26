@@ -1,5 +1,6 @@
 package com.icaroerasmo.seafood.core.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Document(collection = "sell")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Sell extends DocumentBase {
     @NotNull
     private Store store;
