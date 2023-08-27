@@ -42,15 +42,27 @@ public class SellService extends Service<Sell> {
             throw new DataInconsistencyException("Not all items are related to the store");
         }
 
+        final String storeId = sell.getStore().getId();
+        final String userId = sell.getBuyer().getId();
+
         return Mono.zip(
-            storeRepository.findById(sell.getStore().getId()),
-            userRepository.findById(sell.getBuyer().getId())
+            storeRepository.existsById(storeId),
+            userRepository.existsById(userId)
         ).
         flatMap((tuple) -> {
-                sell.setStore(tuple.getT1());
-                sell.setBuyer(tuple.getT2());
             try {
-                return super.save(sell);
+
+                final Boolean existsStore = tuple.getT1(), existsUser = tuple.getT2();
+
+                if(existsStore && existsUser) {
+                    return super.save(sell);
+                }
+
+                final String message =
+                        (!existsStore ? "Store not found for id "+ storeId : "") +
+                        (!existsUser ? "User not found for id "+ userId : "");
+
+                return Mono.error(new DataNotFoundException(message));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

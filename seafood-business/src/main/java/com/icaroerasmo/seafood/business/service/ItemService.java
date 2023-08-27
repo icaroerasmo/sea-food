@@ -25,12 +25,16 @@ public class ItemService extends Service<Item> {
     }
     @Override
     public Mono<Item> save(Item item) throws Exception {
+        final String storeId = item.getStore().getId();
         return storeRepository.
-                findById(item.getStore().getId()).flatMap(
-                        store -> {
-                            item.setStore(store);
+                existsById(item.getStore().getId()).
+                flatMap(
+                        exists -> {
                             try {
-                                return super.save(item);
+                                if(exists) {
+                                    return super.save(item);
+                                }
+                                return Mono.error(new DataNotFoundException("Item not found for id "+ storeId));
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
