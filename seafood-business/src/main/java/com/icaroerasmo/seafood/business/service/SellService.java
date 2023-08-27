@@ -34,12 +34,26 @@ public class SellService extends Service<Sell> {
     }
     @Override
     public Mono<Sell> save(Sell sell) throws Exception {
+
         if(sell.getItems().stream().
                 anyMatch(item -> !item.getStore().
                         getId().equals(sell.
                                 getStore().getId()))){
             throw new DataInconsistencyException("Not all items are related to the store");
         }
-        return super.save(sell);
+
+        return Mono.zip(
+            storeRepository.findById(sell.getStore().getId()),
+            userRepository.findById(sell.getBuyer().getId())
+        ).
+        flatMap((tuple) -> {
+                sell.setStore(tuple.getT1());
+                sell.setBuyer(tuple.getT2());
+            try {
+                return super.save(sell);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

@@ -38,13 +38,14 @@ type LegalEntity {
 type Item {
     id: String
     description: String
+    store: Store
     createdAt: Instant
     updatedAt: Instant
 }
 type Store {
     id: String
     storeInfo: LegalEntity
-    score: Long
+    score: Float
     createdAt: Instant
     updatedAt: Instant
 }
@@ -70,9 +71,15 @@ type User {
     updatedAt: Instant
 }
 input UserInput {
-    id: String
+    id: ID
     password: String!
     userInfo: PersonInput!
+}
+input BuyerUserInput {
+    id: String
+    userInfo: IndividualPersonInput!
+    createdAt: Instant
+    updatedAt: Instant
 }
 input PersonInput {
     name: String!
@@ -81,6 +88,18 @@ input PersonInput {
     phone: String!
     personType: PersonType!
     addresses: [AddressInput]!
+}
+input IndividualPersonInput {
+    name: String
+    personType: PersonType
+}
+input LegalEntityInput {
+    name: String
+    documentNo: String
+    email: String
+    phone: String
+    personType: PersonType
+    addresses: [AddressInput]
 }
 input AddressInput {
     addressType: AddressType!
@@ -96,11 +115,12 @@ input SellInput {
 }
 input StoreInput {
     id: String
-    storeInfo: PersonInput!
-    score: Long
+    storeInfo: BuyerUserInput!
+    score: Float
 }
 input ItemInput {
     id: String
+    store: StoreInput!
     description: String!
 }
 input PasswordChangeInput {
