@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
 
@@ -17,10 +16,8 @@ public class Person {
     @NotEmpty
     protected String name;
     @NotEmpty
-    @Indexed(unique = true)
     protected String documentNo;
     @NotEmpty
-    @Indexed(unique = true)
     protected String email;
     @NotEmpty
     protected String phone;

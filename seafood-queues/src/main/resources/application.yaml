@@ -3,7 +3,6 @@ spring:
     mongodb:
       database: "seafood"
       uri: "mongodb://mongoadmin:secret@localhost:27017/seafood?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin"
-      auto-index-creation: true
   kafka:
     consumer:
       bootstrap-servers: 127.0.0.1:9092

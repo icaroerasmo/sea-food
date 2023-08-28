@@ -44,7 +44,7 @@ type Item {
 }
 type Store {
     id: String
-    storeInfo: LegalEntity
+    storeInfo: StoreUser
     score: Float
     createdAt: Instant
     updatedAt: Instant
@@ -63,6 +63,12 @@ type BuyerUser {
     createdAt: Instant
     updatedAt: Instant
 }
+type StoreUser {
+    id: String
+    userInfo: LegalEntity
+    createdAt: Instant
+    updatedAt: Instant
+}
 type User {
     id: String
     password: String
@@ -78,6 +84,12 @@ input UserInput {
 input BuyerUserInput {
     id: String
     userInfo: IndividualPersonInput!
+    createdAt: Instant
+    updatedAt: Instant
+}
+input StoreUserInput {
+    id: String
+    userInfo: LegalEntityInput!
     createdAt: Instant
     updatedAt: Instant
 }
@@ -110,12 +122,12 @@ input AddressInput {
 input SellInput {
     id: String
     store: StoreInput!
-    buyer: UserInput!
+    buyer: BuyerUserInput!
     items: [ItemInput]!
 }
 input StoreInput {
     id: String
-    storeInfo: BuyerUserInput!
+    storeInfo: StoreUserInput!
     score: Float
 }
 input ItemInput {
