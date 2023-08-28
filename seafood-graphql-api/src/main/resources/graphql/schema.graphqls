@@ -1,4 +1,4 @@
-scalar Long
+scalar BigDecimal
 scalar Instant
 enum AddressType {
     AVENUE
@@ -39,6 +39,7 @@ type Item {
     id: String
     description: String
     store: Store
+    price: BigDecimal
     createdAt: Instant
     updatedAt: Instant
 }
@@ -133,6 +134,7 @@ input StoreInput {
 input ItemInput {
     id: String
     store: StoreInput!
+    price: BigDecimal
     description: String!
 }
 input PasswordChangeInput {
