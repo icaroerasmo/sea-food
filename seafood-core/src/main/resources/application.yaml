@@ -1,6 +1,31 @@
+spring:
+  data:
+    mongodb:
+      database: "seafood"
+      uri: "mongodb://mongoadmin:secret@localhost:27017/seafood?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin"
+  graphql:
+    path: /api/graphql
+    graphiql:
+      path: /view/graphiql
+      endpoint: ${spring.graphql.path}
+      enabled: true
+  kafka:
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.icaroerasmo.seafood.core.util.KafkaDeserializer
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.icaroerasmo.seafood.core.util.KafkaSerializer
+      group-id: group_id
 logging:
   pattern:
     level:
-      root: error
+      root: debug
       com.icaroerasmo.seafood: info
-      org.springframework: error
+      org.springframework: debug
+
+auto.create.topics.enable: true
