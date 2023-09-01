@@ -49,12 +49,13 @@ class SeafoodCoreAPIApplicationTests {
 
 		userRepository.
 				save(user).
-				switchIfEmpty(Mono.error(new RuntimeException("User not saved"))).
+				doOnError((err) -> Mono.error(err)).
 				flatMap(usr -> {
 					log.error(usr);
 					store.setStoreInfo(usr);
 					return storeRepository.save(store);
 				}).
+				doOnError((err) -> Mono.error(err)).
 				subscribe((result) -> log.info(result));
 	}
 

@@ -1,8 +1,10 @@
+de.flapdoodle.mongodb.embedded.version: 3.6.3
 spring:
   data:
     mongodb:
       database: "seafood"
-      uri: "mongodb://mongoadmin:secret@localhost:27017/seafood?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin"
+      uri: "mongodb://localhost:27017"
+
 logging:
   pattern:
     level:
