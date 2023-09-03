@@ -4,8 +4,10 @@ import com.icaroerasmo.seafood.SeafoodCoreApplicationTests;
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import com.icaroerasmo.seafood.core.util.TestMassUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Example;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -40,5 +42,29 @@ public class UserRepositoryTests extends SeafoodCoreApplicationTests {
                 })
                 .expectComplete()
                 .verify();
+    }
+    @Test
+    void userPersistenceWithSameEmailTest() {
+        final User user1 = TestMassUtil.user();
+
+        final User user2 = TestMassUtil.user();
+        user2.getUserInfo().setDocumentNo("1111111111");
+
+        Mono<User> userMono1 = userRepository.save(user1);
+        Mono<User> userMono2 = userRepository.save(user2);
+
+        Assertions.assertThrows(DuplicateKeyException.class, () -> Mono.zip(userMono1, userMono2).block());
+    }
+    @Test
+    void userPersistenceWithSameDocumentTest() {
+        final User user1 = TestMassUtil.user();
+
+        final User user2 = TestMassUtil.user();
+        user2.getUserInfo().setEmail("i@i.com");
+
+        Mono<User> userMono1 = userRepository.save(user1);
+        Mono<User> userMono2 = userRepository.save(user2);
+
+        Assertions.assertThrows(DuplicateKeyException.class, () -> Mono.zip(userMono1, userMono2).block());
     }
 }
