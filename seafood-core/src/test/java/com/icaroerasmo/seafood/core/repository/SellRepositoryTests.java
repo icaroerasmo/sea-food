@@ -1,6 +1,6 @@
 package com.icaroerasmo.seafood.core.repository;
 
-import com.icaroerasmo.seafood.SeafoodCoreAPIApplicationTests;
+import com.icaroerasmo.seafood.SeafoodCoreApplicationTests;
 
-public class SellRepositoryTests extends SeafoodCoreAPIApplicationTests {
+public class SellRepositoryTests extends SeafoodCoreApplicationTests {
 }

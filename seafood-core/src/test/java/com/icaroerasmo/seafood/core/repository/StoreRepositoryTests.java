@@ -1,6 +1,6 @@
 package com.icaroerasmo.seafood.core.repository;
 
-import com.icaroerasmo.seafood.SeafoodCoreAPIApplicationTests;
+import com.icaroerasmo.seafood.SeafoodCoreApplicationTests;
 import com.icaroerasmo.seafood.core.model.Store;
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
@@ -14,7 +14,7 @@ import reactor.test.StepVerifier;
 
 import static org.springframework.test.util.AssertionErrors.*;
 
-public class StoreRepositoryTests extends SeafoodCoreAPIApplicationTests {
+public class StoreRepositoryTests extends SeafoodCoreApplicationTests {
     @Autowired
     private UserRepository userRepository;
     @Autowired

@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Log4j2
 @SpringBootApplication
-public class SeafoodCoreAPIApplication {
+public class SeafoodBusinessApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SeafoodCoreAPIApplication.class, args);
+		SpringApplication.run(SeafoodBusinessApplication.class, args);
 	}
 }
