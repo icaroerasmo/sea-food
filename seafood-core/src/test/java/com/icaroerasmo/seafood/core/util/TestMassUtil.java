@@ -2,10 +2,7 @@ package com.icaroerasmo.seafood.core.util;
 
 import com.icaroerasmo.seafood.core.enums.AddressType;
 import com.icaroerasmo.seafood.core.enums.PersonType;
-import com.icaroerasmo.seafood.core.model.Address;
-import com.icaroerasmo.seafood.core.model.Person;
-import com.icaroerasmo.seafood.core.model.Store;
-import com.icaroerasmo.seafood.core.model.User;
+import com.icaroerasmo.seafood.core.model.*;
 
 import java.util.Arrays;
 
@@ -45,5 +42,11 @@ public abstract class TestMassUtil {
         store.setScore(4.95F);
         store.setStoreInfo(user);
         return store;
+    }
+    public static Item item(Store store) {
+        Item item = new Item();
+        item.setDescription("Item");
+        item.setStore(store);
+        return item;
     }
 }
