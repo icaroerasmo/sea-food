@@ -22,9 +22,7 @@ public class UserRepositoryTests extends SeafoodCoreApplicationTests {
     void userPersistenceTest() {
         final User user = TestMassUtil.user();
 
-        userRepository.
-                save(user).
-                doOnError((err) -> Mono.error(err)).block();
+        userRepository.save(user).block();
 
         Mono<User> userMono = userRepository.findOne(Example.of(user));
 
