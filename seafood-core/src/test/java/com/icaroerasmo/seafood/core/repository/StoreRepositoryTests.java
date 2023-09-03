@@ -41,7 +41,7 @@ public class StoreRepositoryTests extends SeafoodCoreApplicationTests {
                 .assertNext(_store -> {
                     assertNotNull("store id is null", _store.getId());
                     assertNotNull("store score is null", _store.getScore());
-                    assertTrue("store score is not bigger than zero", store.getScore() > 0);
+                    assertTrue("store score is not bigger than zero", _store.getScore() > 0);
                     assertNotNull("storeInfo is null", _store.getStoreInfo());
                     assertNotNull("userInfo is null" , _store.getStoreInfo().getId());
                     assertEquals("userInfo is not equal", "test test", _store.getStoreInfo().getUserInfo().getName());
