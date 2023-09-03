@@ -49,3 +49,12 @@ networks:
   broker-kafka:
     driver: bridge  
 ```
+# Querying database
+```bash
+docker run -it --rm --network host mongo \
+mongosh --host localhost \
+-u mongoadmin \
+-p secret \
+--authenticationDatabase admin \
+seafood
+```
