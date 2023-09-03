@@ -19,6 +19,7 @@ import reactor.util.function.Tuple5;
 
 import java.util.Arrays;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotEmpty;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
@@ -88,6 +89,7 @@ public class SellRepositoryTests extends SeafoodCoreApplicationTests {
                     assertNotNull("sell buyer is null", _sell.getBuyer());
                     assertNotNull("sell buyer id is null", _sell.getBuyer().getId());
                     assertNotNull("sell buyer name is null", _sell.getBuyer().getUserInfo().getName());
+                    assertNotEmpty("sell buyer name is empty", _sell.getBuyer().getUserInfo().getName());
                     assertNotNull("sell store is null", _sell.getStore());
                     assertNotNull("sell item list is null", _sell.getItems());
                     assertFalse("sell item list is empty", _sell.getItems().isEmpty());
