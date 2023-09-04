@@ -42,6 +42,8 @@ public class ItemRepositoryTests extends SeafoodCoreApplicationTests {
                     assertNotEmpty("item store id is empty", _item.getStore().getId());
                     assertNotNull("item store score is null", _item.getStore().getScore());
                     assertTrue("item store score is not bigger than zero", _item.getStore().getScore() > 0);
+                    assertNotNull("item createdAt is null", _item.getCreatedAt());
+                    assertNotNull("item updatedAt is null", _item.getUpdatedAt());
                 })
                 .expectComplete()
                 .verify();

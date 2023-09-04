@@ -94,6 +94,8 @@ public class SellRepositoryTests extends SeafoodCoreApplicationTests {
                     assertNotNull("sell item list is null", _sell.getItems());
                     assertFalse("sell item list is empty", _sell.getItems().isEmpty());
                     assertNotNull("sell first item from list description is null", _sell.getItems().get(0).getDescription());
+                    assertNotNull("sell createdAt is null", _sell.getCreatedAt());
+                    assertNotNull("sell updatedAt is null", _sell.getUpdatedAt());
                 })
                 .expectComplete()
                 .verify();

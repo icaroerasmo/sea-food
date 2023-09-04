@@ -46,6 +46,8 @@ public class StoreRepositoryTests extends SeafoodCoreApplicationTests {
                     assertNotNull("storeInfo is null", _store.getStoreInfo());
                     assertNotNull("userInfo is null" , _store.getStoreInfo().getId());
                     assertEquals("userInfo is not equal", "test test", _store.getStoreInfo().getUserInfo().getName());
+                    assertNotNull("sell createdAt is null", _store.getCreatedAt());
+                    assertNotNull("sell updatedAt is null", _store.getUpdatedAt());
                 })
                 .expectComplete()
                 .verify();

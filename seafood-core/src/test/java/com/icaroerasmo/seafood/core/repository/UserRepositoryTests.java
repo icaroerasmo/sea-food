@@ -30,13 +30,13 @@ public class UserRepositoryTests extends SeafoodCoreApplicationTests {
                 .create(userMono)
                 .assertNext(_user -> {
                     assertNotNull("user id is null", _user.getId());
-                    assertNotNull("userInfo is null", _user.getUserInfo());
-                    assertNotNull("userInfo name is null", _user.getUserInfo().getName());
-                    assertNotEmpty("userInfo name is empty", _user.getUserInfo().getName());
-                    assertNotNull("password is null", _user.getPassword());
-                    assertNotEmpty("password is empty", _user.getPassword());
-                    assertNotNull("createdAt is null", _user.getCreatedAt());
-                    assertNotNull("updatedAt is null", _user.getUpdatedAt());
+                    assertNotNull("user userInfo is null", _user.getUserInfo());
+                    assertNotNull("user userInfo name is null", _user.getUserInfo().getName());
+                    assertNotEmpty("user userInfo name is empty", _user.getUserInfo().getName());
+                    assertNotNull("user password is null", _user.getPassword());
+                    assertNotEmpty("user password is empty", _user.getPassword());
+                    assertNotNull("user createdAt is null", _user.getCreatedAt());
+                    assertNotNull("user updatedAt is null", _user.getUpdatedAt());
                 })
                 .expectComplete()
                 .verify();
