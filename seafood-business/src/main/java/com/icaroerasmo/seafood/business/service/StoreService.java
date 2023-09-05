@@ -5,6 +5,7 @@ import com.icaroerasmo.seafood.core.model.Store;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -12,8 +13,9 @@ import reactor.core.publisher.Mono;
 public class StoreService extends Service<Store> {
     @Autowired
     private UserRepository userRepository;
+    @Cacheable(value="storesByNamePrefix")
     public Flux<Store> findAllStoresByNamePrefix(String namePrefix) {
-        return ((StoreRepository) repository).findAllStoresByNamePrefix(namePrefix);
+        return ((StoreRepository) repository).findAllStoresByNamePrefix(namePrefix).cache();
     }
     @Override
     public Mono<Store> save(Store store) throws Exception {

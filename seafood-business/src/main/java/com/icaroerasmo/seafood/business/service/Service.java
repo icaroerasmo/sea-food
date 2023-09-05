@@ -5,6 +5,7 @@ import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
@@ -31,8 +32,9 @@ public abstract class Service<T extends DocumentBase> {
                     }
                 });
     }
+    @Cacheable(value = "byId", key = "#id")
     public Mono<T> findById(String id) {
         return repository.findById(id).switchIfEmpty(
-                Mono.error(new DataNotFoundException("Document not found for ID: "+ id)));
+                Mono.error(new DataNotFoundException("Document not found for ID: "+ id))).cache();
     }
 }

@@ -5,6 +5,7 @@ import com.icaroerasmo.seafood.core.model.Item;
 import com.icaroerasmo.seafood.core.repository.item.ItemRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -12,16 +13,18 @@ import reactor.core.publisher.Mono;
 public class ItemService extends Service<Item> {
     @Autowired
     private StoreRepository storeRepository;
+    @Cacheable(value = "itemsByDescriptionPrefix", key = "T(com.icaroerasmo.seafood.core.Item).getId()")
     public Flux<Item> findAllItemsByDescriptionPrefix(String descriptionPrefix) {
-        return ((ItemRepository) repository).findAllItemsByDescriptionPrefix(descriptionPrefix);
+        return ((ItemRepository) repository).findAllItemsByDescriptionPrefix(descriptionPrefix).cache();
     }
+    @Cacheable(value = "itemsByStore", key = "T(com.icaroerasmo.seafood.core.Item).getId()")
     public Flux<Item> findAllItemsByStoreId(String storeId) {
         return storeRepository.
                 existsById(storeId).
                 flatMapMany(
                         exists -> exists ?
                         ((ItemRepository) repository).findAllItemsByStoreId(storeId) :
-                            Flux.error(new DataNotFoundException("Item not found for id "+ storeId)));
+                            Flux.error(new DataNotFoundException("Item not found for id "+ storeId))).cache();
     }
     @Override
     public Mono<Item> save(Item item) throws Exception {
