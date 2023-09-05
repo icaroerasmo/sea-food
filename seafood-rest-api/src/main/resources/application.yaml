@@ -25,4 +25,4 @@ logging:
 auto.create.topics.enable: true
 seafood:
   cache:
-    ttl: 1000
+    ttl: 180000
