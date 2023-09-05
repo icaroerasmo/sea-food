@@ -14,7 +14,7 @@ public class SeafoodProperties {
     @Bean
     @ConfigurationProperties(prefix = "cache")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public CacheProperties cacheProperties() {
+    protected CacheProperties cacheProperties() {
         return cache;
     }
 
