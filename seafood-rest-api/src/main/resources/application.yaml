@@ -23,3 +23,6 @@ logging:
       org.springframework: debug
 
 auto.create.topics.enable: true
+seafood:
+  cache:
+    ttl: 180000

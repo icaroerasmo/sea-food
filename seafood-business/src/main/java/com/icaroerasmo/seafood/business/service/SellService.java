@@ -86,7 +86,7 @@ public class SellService extends Service<Sell> {
         @CacheEvict(value = "sellsByUserId", allEntries = true),
         @CacheEvict(value = "sellsByStoreId", allEntries = true)
     })
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(fixedRateString = "#{@cacheProperties.getTtl()}")
     void cacheCleaning() {
         log.info("Cleaning sell cache");
     }

@@ -17,3 +17,6 @@ logging:
       root: error
       com.icaroerasmo.seafood: info
       org.springframework: error
+seafood:
+  cache:
+    ttl: 180000

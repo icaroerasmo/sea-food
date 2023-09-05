@@ -47,7 +47,7 @@ public class StoreService extends Service<Store> {
         @CacheEvict(value = "storeById", allEntries = true),
         @CacheEvict(value = "storesByNamePrefix", allEntries = true)
     })
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(fixedRateString = "#{@cacheProperties.getTtl()}")
     void cacheCleaning() {
         log.info("Cleaning store cache");
     }

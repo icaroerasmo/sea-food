@@ -58,7 +58,7 @@ public class ItemService extends Service<Item> {
         @CacheEvict(value = "itemsByDescriptionPrefix", allEntries = true),
         @CacheEvict(value = "itemsByStore", allEntries = true)
     })
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(fixedRateString = "#{@cacheProperties.getTtl()}")
     void cacheCleaning() {
         log.info("Cleaning item cache");
     }

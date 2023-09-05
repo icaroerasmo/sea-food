@@ -7,6 +7,8 @@ import com.icaroerasmo.seafood.core.model.Person;
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -17,6 +19,10 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
+
+    @Autowired
+    private CacheManager cacheManager;
+
     @Override
     @Cacheable(value = "userById", key = "#id")
     public Mono<User> findById(String id) {
@@ -84,7 +90,7 @@ public class UserService extends Service<User> {
         @CacheEvict(value = "userByEmail", allEntries = true),
         @CacheEvict(value = "usersByNamePrefix", allEntries = true)
     })
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(fixedRateString = "#{@cacheProperties.getTtl()}")
     void cacheCleaning() {
         log.info("Cleaning user cache");
     }
