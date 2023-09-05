@@ -6,10 +6,15 @@ import com.icaroerasmo.seafood.business.exceptions.PasswordNotChangedException;
 import com.icaroerasmo.seafood.core.model.Person;
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.scheduling.annotation.Scheduled;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Log4j2
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
     @Override
@@ -72,5 +77,15 @@ public class UserService extends Service<User> {
                    throw new PasswordNotChangedException(passwordChangeDTO.getUserId());
                 }).
                 doOnError((exception) -> Mono.error(exception));
+    }
+    @Caching(evict = {
+        @CacheEvict(value = "userById", allEntries = true),
+        @CacheEvict(value = "userByDocumentNo", allEntries = true),
+        @CacheEvict(value = "userByEmail", allEntries = true),
+        @CacheEvict(value = "usersByNamePrefix", allEntries = true)
+    })
+    @Scheduled(fixedRate = 180000)
+    void cacheCleaning() {
+        log.info("Cleaning user cache");
     }
 }

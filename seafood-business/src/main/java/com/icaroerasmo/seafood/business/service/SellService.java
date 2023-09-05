@@ -6,11 +6,16 @@ import com.icaroerasmo.seafood.core.model.Sell;
 import com.icaroerasmo.seafood.core.repository.sell.SellRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.scheduling.annotation.Scheduled;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Log4j2
 @org.springframework.stereotype.Service
 public class SellService extends Service<Sell> {
     @Autowired
@@ -75,5 +80,14 @@ public class SellService extends Service<Sell> {
                 throw new RuntimeException(e);
             }
         });
+    }
+    @Caching(evict = {
+        @CacheEvict(value = "sellById", allEntries = true),
+        @CacheEvict(value = "sellsByUserId", allEntries = true),
+        @CacheEvict(value = "sellsByStoreId", allEntries = true)
+    })
+    @Scheduled(fixedRate = 180000)
+    void cacheCleaning() {
+        log.info("Cleaning sell cache");
     }
 }

@@ -4,11 +4,16 @@ import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.core.model.Store;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.scheduling.annotation.Scheduled;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Log4j2
 @org.springframework.stereotype.Service
 public class StoreService extends Service<Store> {
     @Autowired
@@ -37,5 +42,13 @@ public class StoreService extends Service<Store> {
                         throw new RuntimeException(e);
                     }
                 });
+    }
+    @Caching(evict = {
+        @CacheEvict(value = "storeById", allEntries = true),
+        @CacheEvict(value = "storesByNamePrefix", allEntries = true)
+    })
+    @Scheduled(fixedRate = 180000)
+    void cacheCleaning() {
+        log.info("Cleaning store cache");
     }
 }
