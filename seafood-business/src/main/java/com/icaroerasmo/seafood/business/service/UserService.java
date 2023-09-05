@@ -12,6 +12,11 @@ import reactor.core.publisher.Mono;
 
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
+    @Override
+    @Cacheable(value = "userById", key = "#id")
+    public Mono<User> findById(String id) {
+        return super.findById(id);
+    }
     @Cacheable(value="userByDocumentNo", key="#documentNo")
     public Mono<User> findUserByDocumentNo(String documentNo) {
         return ((UserRepository) repository).findUserByDocumentNo(documentNo).cache();
@@ -31,7 +36,8 @@ public class UserService extends Service<User> {
             return super.save(user);
         }
 
-        return repository.findById(user.getId()).
+        return repository.
+                findById(user.getId()).
                 flatMap((savedUser) -> {
                             if(savedUser != null) {
                                 Person person = savedUser.getUserInfo();

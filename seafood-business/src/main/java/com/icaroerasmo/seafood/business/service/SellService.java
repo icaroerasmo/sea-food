@@ -17,7 +17,12 @@ public class SellService extends Service<Sell> {
     private UserRepository userRepository;
     @Autowired
     private StoreRepository storeRepository;
-    @Cacheable(value = "sellsByUserId")
+    @Override
+    @Cacheable(value = "sellById", key = "#id")
+    public Mono<Sell> findById(String id) {
+        return super.findById(id);
+    }
+    @Cacheable(value = "sellsByUserId", key = "#userId")
     public Flux<Sell> findAllSellsByUserId(String userId) {
         return userRepository.
                 existsById(userId).
@@ -26,7 +31,7 @@ public class SellService extends Service<Sell> {
                                 ((SellRepository) repository).findAllSellsByUserId(userId) :
                                 Flux.error(new DataNotFoundException("User not found for id "+ userId))).cache();
     }
-    @Cacheable(value = "sellsByStoreId")
+    @Cacheable(value = "sellsByStoreId", key = "#storeId")
     public Flux<Sell> findAllSellsByStoreId(String storeId) {
         return storeRepository.
                 existsById(storeId).

@@ -13,11 +13,16 @@ import reactor.core.publisher.Mono;
 public class ItemService extends Service<Item> {
     @Autowired
     private StoreRepository storeRepository;
-    @Cacheable(value = "itemsByDescriptionPrefix", key = "T(com.icaroerasmo.seafood.core.Item).getId()")
+    @Override
+    @Cacheable(value = "itemById", key = "#id")
+    public Mono<Item> findById(String id) {
+        return super.findById(id);
+    }
+    @Cacheable(value = "itemsByDescriptionPrefix", key = "#descriptionPrefix")
     public Flux<Item> findAllItemsByDescriptionPrefix(String descriptionPrefix) {
         return ((ItemRepository) repository).findAllItemsByDescriptionPrefix(descriptionPrefix).cache();
     }
-    @Cacheable(value = "itemsByStore", key = "T(com.icaroerasmo.seafood.core.Item).getId()")
+    @Cacheable(value = "itemsByStore", key = "#storeId")
     public Flux<Item> findAllItemsByStoreId(String storeId) {
         return storeRepository.
                 existsById(storeId).
