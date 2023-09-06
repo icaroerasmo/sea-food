@@ -11,13 +11,13 @@ import reactor.core.publisher.Mono;
 public abstract class Service<T extends DocumentBase> {
     @Autowired
     protected ReactiveMongoRepository<T, String> repository;
+    public abstract Mono<T> save(T t);
     @Transactional
-    public Mono<T> save(T t) {
-        if(t.getId() != null) {
-            return repository.
-                    findById(t.getId()).
+    protected Mono<T> save(T t, Mono<DocumentBase> docBaseMono) {
+        if (t.getId() != null) {
+            return docBaseMono.
                     flatMap(saved -> {
-                        if(saved != null) {
+                        if (saved != null) {
                             t.setCreatedAt(saved.getCreatedAt());
                         }
                         return repository.save(t);
