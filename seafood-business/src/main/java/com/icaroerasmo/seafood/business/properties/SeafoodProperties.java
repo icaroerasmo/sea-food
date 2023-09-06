@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 @ConfigurationProperties(prefix = "seafood")
 public class SeafoodProperties {
     private final CacheProperties cache = new CacheProperties();
+    private final MessagesProperties messagesProperties = new MessagesProperties();
     @Bean
     @ConfigurationProperties(prefix = "cache")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -20,8 +21,8 @@ public class SeafoodProperties {
         return cache;
     }
 
-    @Data
-    public class CacheProperties {
-        private Integer ttl = 180000; // 3 minutes in milliseconds
-    }
+    @Bean
+    @ConfigurationProperties(prefix = "messages")
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    protected MessagesProperties messagesProperties() {return messagesProperties;};
 }
