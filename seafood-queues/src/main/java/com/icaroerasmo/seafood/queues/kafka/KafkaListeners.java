@@ -3,6 +3,7 @@ package com.icaroerasmo.seafood.queues.kafka;
 import com.icaroerasmo.seafood.core.dto.ErrorDTO;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.Constants;
+import com.icaroerasmo.seafood.core.model.DocumentBase;
 import com.icaroerasmo.seafood.queues.services.Service;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,12 @@ public class KafkaListeners {
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
     @KafkaListener(id = "${spring.kafka.producer.group-id}", topics = Constants.KAFKA_INPUT_QUEUE)
-    public <T> void inputListener(KafkaMessageDTO<T> message) throws Exception {
+    public <T extends DocumentBase> void inputListener(KafkaMessageDTO<T> message) throws Exception {
         log.info("Message {} received", message);
         process(message);
     }
 
-    private <T> void process(KafkaMessageDTO<T> message) {
+    private <T extends DocumentBase> void process(KafkaMessageDTO<T> message) {
 
         final T payload = message.getPayload();
         final Service<T> service = getServiceBean(payload);
@@ -40,7 +41,8 @@ public class KafkaListeners {
             });
 
         switch (message.getOperation()) {
-            case SAVE -> doOnError.apply(service.save(payload)).
+            case SAVE -> doOnError.apply(
+                    service.save(payload)).
                     subscribe((newPayload) -> {
                         message.setPayload((T) newPayload);
                         kafkaTemplate.send(Constants.KAFKA_OUTPUT_QUEUE, message);
@@ -52,7 +54,7 @@ public class KafkaListeners {
         }
     }
 
-    private <T> Service<T> getServiceBean(T payload) {
+    private <T extends DocumentBase> Service<T> getServiceBean(T payload) {
         final String[] beanNamesForType = context.
                 getBeanNamesForType(ResolvableType.
                     forClassWithGenerics(Service.class, payload.getClass()));

@@ -19,10 +19,8 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
-
     @Autowired
     private CacheManager cacheManager;
-
     @Override
     @Cacheable(value = "userById", key = "#id")
     public Mono<User> findById(String id) {
@@ -49,6 +47,7 @@ public class UserService extends Service<User> {
 
         return repository.
                 findById(user.getId()).
+                switchIfEmpty(Mono.error(new DataNotFoundException("User not found for ID: "+user.getId()))).
                 flatMap((savedUser) -> {
                             if(savedUser != null) {
                                 Person person = savedUser.getUserInfo();
@@ -69,7 +68,7 @@ public class UserService extends Service<User> {
         //TODO encrypt old and new passwords
         return repository.findById(passwordChangeDTO.getUserId()).
                 switchIfEmpty(
-                        Mono.error(new DataNotFoundException("User not found for ID: "+ passwordChangeDTO.getUserId()))
+                        Mono.error(new DataNotFoundException("User not found for ID: "+passwordChangeDTO.getUserId()))
                 ).
                 flatMap(user -> {
                    if(user.getPassword().equals(passwordChangeDTO.getOldPasswd())) {
