@@ -13,16 +13,14 @@ import org.springframework.context.annotation.Scope;
 @ConfigurationProperties(prefix = "seafood")
 public class SeafoodProperties {
     private final CacheProperties cache = new CacheProperties();
-    private final MessagesProperties messagesProperties = new MessagesProperties();
+    private final MessagesProperties messages = new MessagesProperties();
     @Bean
-    @ConfigurationProperties(prefix = "cache")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     protected CacheProperties cacheProperties() {
         return cache;
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "messages")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    protected MessagesProperties messagesProperties() {return messagesProperties;};
+    protected MessagesProperties messagesProperties() {return messages;};
 }
