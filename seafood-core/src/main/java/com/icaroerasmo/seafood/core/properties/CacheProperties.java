@@ -1,4 +1,4 @@
-package com.icaroerasmo.seafood.business.properties;
+package com.icaroerasmo.seafood.core.properties;
 
 import lombok.Data;
 

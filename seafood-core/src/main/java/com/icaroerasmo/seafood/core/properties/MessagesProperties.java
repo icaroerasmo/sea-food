@@ -1,8 +1,9 @@
-package com.icaroerasmo.seafood.business.properties;
+package com.icaroerasmo.seafood.core.properties;
 
 import lombok.Data;
 
 @Data
 public class MessagesProperties {
+    private Integer numberOfRetries = 5;
     private Integer timeout = 120000; // 2 minutes in milliseconds
 }

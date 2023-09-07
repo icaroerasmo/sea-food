@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Mono;
 
-public class DocumentBaseRepositoryImpl<T extends DocumentBase> implements DocumentBaseRepository<T> {
+public class CustomDocumentBaseRepositoryImpl<T extends DocumentBase> implements CustomDocumentBaseRepository<T> {
     @Autowired
     private ReactiveMongoTemplate mongoTemplate;
     @Override

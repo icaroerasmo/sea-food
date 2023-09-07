@@ -22,9 +22,9 @@ logging:
       com.icaroerasmo.seafood: info
       org.springframework: debug
 
-auto.create.topics.enable: true
 seafood:
   cache:
     ttl: 180000
   messages:
     timeout: 120000
+    numberOfRetries: 10

@@ -1,4 +1,4 @@
-package com.icaroerasmo.seafood.business.properties;
+package com.icaroerasmo.seafood.core.properties;
 
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;

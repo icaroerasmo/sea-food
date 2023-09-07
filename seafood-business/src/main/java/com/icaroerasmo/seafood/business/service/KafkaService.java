@@ -1,7 +1,7 @@
 package com.icaroerasmo.seafood.business.service;
 
 import com.icaroerasmo.seafood.business.exceptions.KafkaMessagesException;
-import com.icaroerasmo.seafood.business.properties.MessagesProperties;
+import com.icaroerasmo.seafood.core.properties.MessagesProperties;
 import com.icaroerasmo.seafood.core.dto.ErrorDTO;
 import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.Constants;

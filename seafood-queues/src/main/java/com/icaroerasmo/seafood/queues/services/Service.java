@@ -1,7 +1,7 @@
 package com.icaroerasmo.seafood.queues.services;
 
 import com.icaroerasmo.seafood.core.model.DocumentBase;
-import com.icaroerasmo.seafood.core.repository.common.DocumentBaseRepository;
+import com.icaroerasmo.seafood.core.repository.common.CustomDocumentBaseRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
@@ -15,7 +15,7 @@ public abstract class Service<T extends DocumentBase> {
     @Transactional
     public Mono<T> save(T t) {
 
-        final DocumentBaseRepository<T> docBasRepo = (DocumentBaseRepository<T>) repository;
+        final CustomDocumentBaseRepository<T> docBasRepo = (CustomDocumentBaseRepository<T>) repository;
 
         if (t.getId() != null) {
             return docBasRepo.

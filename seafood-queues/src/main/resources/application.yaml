@@ -21,5 +21,6 @@ logging:
       root: debug
       com.icaroerasmo.seafood: info
       org.springframework: debug
-
-auto.create.topics.enable: true
+seafood:
+  messages:
+    numberOfRetries: 10
