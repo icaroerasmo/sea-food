@@ -1,6 +1,7 @@
 package com.icaroerasmo.seafood.queues.services;
 
 import com.icaroerasmo.seafood.core.model.DocumentBase;
+import com.icaroerasmo.seafood.core.repository.common.DocumentBaseRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
@@ -11,11 +12,14 @@ import reactor.core.publisher.Mono;
 public abstract class Service<T extends DocumentBase> {
     @Autowired
     protected ReactiveMongoRepository<T, String> repository;
-    public abstract Mono<T> save(T t);
     @Transactional
-    protected Mono<T> save(T t, Mono<DocumentBase> docBaseMono) {
+    public Mono<T> save(T t) {
+
+        final DocumentBaseRepository<T> docBasRepo = (DocumentBaseRepository<T>) repository;
+
         if (t.getId() != null) {
-            return docBaseMono.
+            return docBasRepo.
+                    getDocumentBaseDataById(t).
                     flatMap(saved -> {
                         if (saved != null) {
                             t.setCreatedAt(saved.getCreatedAt());

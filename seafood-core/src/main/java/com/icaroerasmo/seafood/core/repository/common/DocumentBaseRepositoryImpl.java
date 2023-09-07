@@ -7,16 +7,16 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Mono;
 
-public class DocumentBaseRepositoryImpl<T> implements DocumentBaseRepository<T> {
+public class DocumentBaseRepositoryImpl<T extends DocumentBase> implements DocumentBaseRepository<T> {
     @Autowired
     private ReactiveMongoTemplate mongoTemplate;
     @Override
-    public Mono<DocumentBase> getDocumentBaseDataById(String id, Class<T> clazz) {
-        final Query query = new Query(Criteria.where("id").is(id));
+    public Mono<DocumentBase> getDocumentBaseDataById(T t) {
+        final Query query = new Query(Criteria.where("id").is(t.getId()));
         query.fields().
                 include("id").
                 include("createdAt").
                 include("updatedAt");
-        return (Mono<DocumentBase>) mongoTemplate.findOne(query, clazz);
+        return (Mono<DocumentBase>) mongoTemplate.findOne(query, t.getClass());
     }
 }
