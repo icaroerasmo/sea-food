@@ -5,8 +5,8 @@ import com.icaroerasmo.seafood.core.model.Item;
 import com.icaroerasmo.seafood.core.repository.item.ItemRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,21 +22,27 @@ public class ItemService extends Service<Item> {
     private StoreRepository storeRepository;
     @Override
     @Cacheable(value = "itemById", key = "#id")
-    public Mono<Item> findById(@Valid @NotEmpty String id) {
-        return super.findById(id);
+    public Mono<Item> findById(String id) {
+        return super.findById(ObjectUtils.requireNonEmpty(id, "Id is empty"));
     }
     @Cacheable(value = "itemsByDescriptionPrefix", key = "#descriptionPrefix")
-    public Flux<Item> findAllItemsByDescriptionPrefix(@Valid @NotEmpty String descriptionPrefix) {
-        return ((ItemRepository) repository).findAllItemsByDescriptionPrefix(descriptionPrefix).cache();
+    public Flux<Item> findAllItemsByDescriptionPrefix(String descriptionPrefix) {
+        return ((ItemRepository) repository).
+                findAllItemsByDescriptionPrefix(
+                        ObjectUtils.requireNonEmpty(
+                                descriptionPrefix, "Description prefix is empty")).cache();
     }
     @Cacheable(value = "itemsByStore", key = "#storeId")
-    public Flux<Item> findAllItemsByStoreId(@Valid @NotEmpty String storeId) {
+    public Flux<Item> findAllItemsByStoreId(String storeId) {
         return storeRepository.
-                existsById(storeId).
+                existsById(ObjectUtils.requireNonEmpty(storeId, "Store id is empty")).
                 flatMapMany(
                         exists -> exists ?
-                        ((ItemRepository) repository).findAllItemsByStoreId(storeId) :
-                            Flux.error(new DataNotFoundException("Item not found for id "+ storeId))).cache();
+                        ((ItemRepository) repository).
+                                findAllItemsByStoreId(
+                                        ObjectUtils.
+                                        requireNonEmpty(storeId, "Store id is empty")) :
+                                Flux.error(new DataNotFoundException("Item not found for id "+ storeId))).cache();
     }
     @Override
     public Mono<Item> save(@Valid Item item) throws Exception {

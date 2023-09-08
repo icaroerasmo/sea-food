@@ -7,8 +7,8 @@ import com.icaroerasmo.seafood.core.model.Person;
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -21,20 +21,20 @@ import reactor.core.publisher.Mono;
 public class UserService extends Service<User> {
     @Override
     @Cacheable(value = "userById", key = "#id")
-    public Mono<User> findById(@Valid @NotEmpty String id) {
-        return super.findById(id);
+    public Mono<User> findById(String id) {
+        return super.findById(ObjectUtils.requireNonEmpty(id, "Id is empty"));
     }
     @Cacheable(value="userByDocumentNo", key="#documentNo")
-    public Mono<User> findUserByDocumentNo(@Valid @NotEmpty String documentNo) {
-        return ((UserRepository) repository).findUserByDocumentNo(documentNo).cache();
+    public Mono<User> findUserByDocumentNo(String documentNo) {
+        return ((UserRepository) repository).findUserByDocumentNo(ObjectUtils.requireNonEmpty(documentNo)).cache();
     }
     @Cacheable(value="userByEmail", key="#email")
-    public Mono<User> findUserByEmail(@Valid @NotEmpty String email) {
-        return ((UserRepository) repository).findUserByEmail(email).cache();
+    public Mono<User> findUserByEmail(String email) {
+        return ((UserRepository) repository).findUserByEmail(ObjectUtils.requireNonEmpty(email, "Email is empty")).cache();
     }
     @Cacheable(value="usersByNamePrefix", key="#namePrefix")
-    public Flux<User> findAllUsersByNamePrefix(@Valid @NotEmpty String namePrefix) {
-        return ((UserRepository) repository).findAllUsersByNamePrefix(namePrefix).cache();
+    public Flux<User> findAllUsersByNamePrefix(String namePrefix) {
+        return ((UserRepository) repository).findAllUsersByNamePrefix(ObjectUtils.requireNonEmpty(namePrefix, "Name prefix is empty")).cache();
     }
     @Override
     public Mono<User> save(@Valid User user) throws Exception {

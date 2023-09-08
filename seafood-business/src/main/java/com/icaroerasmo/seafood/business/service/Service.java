@@ -4,8 +4,8 @@ import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
@@ -19,8 +19,8 @@ public abstract class Service<T extends DocumentBase> {
     public Mono<T> save(@Valid T t) throws Exception {
         return Mono.just(kafkaService.send(KafkaOperation.SAVE, t));
     }
-    public Mono<T> delete(@Valid @NotEmpty String id) throws Exception {
-        return repository.findById(id).
+    public Mono<T> delete(String id) throws Exception {
+        return repository.findById(ObjectUtils.requireNonEmpty(id, "Id is empty")).
                 switchIfEmpty(
                         Mono.error(
                                 new DataNotFoundException("Document not found for ID: "+ id)
@@ -33,8 +33,8 @@ public abstract class Service<T extends DocumentBase> {
                     }
                 });
     }
-    public Mono<T> findById(@Valid @NotEmpty String id) {
-        return repository.findById(id).switchIfEmpty(
+    public Mono<T> findById(String id) {
+        return repository.findById(ObjectUtils.requireNonEmpty(id, "Id is empty")).switchIfEmpty(
                 Mono.error(new DataNotFoundException("Document not found for ID: "+ id))).cache();
     }
 }

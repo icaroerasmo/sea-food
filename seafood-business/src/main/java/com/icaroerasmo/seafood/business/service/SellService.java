@@ -7,8 +7,8 @@ import com.icaroerasmo.seafood.core.repository.sell.SellRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,25 +26,25 @@ public class SellService extends Service<Sell> {
     private StoreRepository storeRepository;
     @Override
     @Cacheable(value = "sellById", key = "#id")
-    public Mono<Sell> findById(@Valid @NotEmpty String id) {
-        return super.findById(id);
+    public Mono<Sell> findById(String id) {
+        return super.findById(ObjectUtils.requireNonEmpty(id, "Id is empty"));
     }
     @Cacheable(value = "sellsByUserId", key = "#userId")
-    public Flux<Sell> findAllSellsByUserId(@Valid @NotEmpty String userId) {
+    public Flux<Sell> findAllSellsByUserId(String userId) {
         return userRepository.
-                existsById(userId).
+                existsById(ObjectUtils.requireNonEmpty(userId, "User id is empty")).
                 flatMapMany(
                         exists -> exists ?
                                 ((SellRepository) repository).findAllSellsByUserId(userId) :
                                 Flux.error(new DataNotFoundException("User not found for id "+ userId))).cache();
     }
     @Cacheable(value = "sellsByStoreId", key = "#storeId")
-    public Flux<Sell> findAllSellsByStoreId(@Valid @NotEmpty String storeId) {
+    public Flux<Sell> findAllSellsByStoreId(String storeId) {
         return storeRepository.
-                existsById(storeId).
+                existsById(ObjectUtils.requireNonEmpty(storeId, "Store id is empty")).
                 flatMapMany(
                         exists -> exists ?
-                            ((SellRepository) repository).findAllSellsByStoreId(storeId) :
+                            ((SellRepository) repository).findAllSellsByStoreId(ObjectUtils.requireNonEmpty(storeId)) :
                                 Flux.error(new DataNotFoundException("Store not found for id "+ storeId))).cache();
     }
     @Override
