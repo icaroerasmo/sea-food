@@ -5,10 +5,8 @@ import com.icaroerasmo.seafood.core.dto.KafkaMessageDTO;
 import com.icaroerasmo.seafood.core.enums.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaListeners {
     @Autowired
-    private ApplicationContext context;
-    @Autowired
     private KafkaService kafkaService;
-    @Autowired
-    private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
     @RetryableTopic(
             backoff = @Backoff(delayExpression = "#{@messagesProperties.getBackoffDelay()}"),
             attempts = "#{@messagesProperties.getNumberOfRetries()}",
