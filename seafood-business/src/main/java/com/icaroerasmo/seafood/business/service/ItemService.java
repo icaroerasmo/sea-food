@@ -4,6 +4,8 @@ import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.core.model.Item;
 import com.icaroerasmo.seafood.core.repository.item.ItemRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,15 +22,15 @@ public class ItemService extends Service<Item> {
     private StoreRepository storeRepository;
     @Override
     @Cacheable(value = "itemById", key = "#id")
-    public Mono<Item> findById(String id) {
+    public Mono<Item> findById(@Valid @NotEmpty String id) {
         return super.findById(id);
     }
     @Cacheable(value = "itemsByDescriptionPrefix", key = "#descriptionPrefix")
-    public Flux<Item> findAllItemsByDescriptionPrefix(String descriptionPrefix) {
+    public Flux<Item> findAllItemsByDescriptionPrefix(@Valid @NotEmpty String descriptionPrefix) {
         return ((ItemRepository) repository).findAllItemsByDescriptionPrefix(descriptionPrefix).cache();
     }
     @Cacheable(value = "itemsByStore", key = "#storeId")
-    public Flux<Item> findAllItemsByStoreId(String storeId) {
+    public Flux<Item> findAllItemsByStoreId(@Valid @NotEmpty String storeId) {
         return storeRepository.
                 existsById(storeId).
                 flatMapMany(
@@ -37,7 +39,7 @@ public class ItemService extends Service<Item> {
                             Flux.error(new DataNotFoundException("Item not found for id "+ storeId))).cache();
     }
     @Override
-    public Mono<Item> save(Item item) throws Exception {
+    public Mono<Item> save(@Valid Item item) throws Exception {
         final String storeId = item.getStore().getId();
         return storeRepository.
                 existsById(item.getStore().getId()).

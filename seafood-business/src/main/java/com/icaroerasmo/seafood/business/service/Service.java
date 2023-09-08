@@ -3,6 +3,8 @@ package com.icaroerasmo.seafood.business.service;
 import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.core.enums.KafkaOperation;
 import com.icaroerasmo.seafood.core.model.DocumentBase;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
@@ -14,10 +16,10 @@ public abstract class Service<T extends DocumentBase> {
     protected ReactiveMongoRepository<T, String> repository;
     @Autowired
     private KafkaService kafkaService;
-    public Mono<T> save(T t) throws Exception {
+    public Mono<T> save(@Valid T t) throws Exception {
         return Mono.just(kafkaService.send(KafkaOperation.SAVE, t));
     }
-    public Mono<T> delete(String id) throws Exception {
+    public Mono<T> delete(@Valid @NotEmpty String id) throws Exception {
         return repository.findById(id).
                 switchIfEmpty(
                         Mono.error(
@@ -31,7 +33,7 @@ public abstract class Service<T extends DocumentBase> {
                     }
                 });
     }
-    public Mono<T> findById(String id) {
+    public Mono<T> findById(@Valid @NotEmpty String id) {
         return repository.findById(id).switchIfEmpty(
                 Mono.error(new DataNotFoundException("Document not found for ID: "+ id))).cache();
     }

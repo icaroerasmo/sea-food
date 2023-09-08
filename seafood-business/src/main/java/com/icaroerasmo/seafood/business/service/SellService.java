@@ -6,6 +6,8 @@ import com.icaroerasmo.seafood.core.model.Sell;
 import com.icaroerasmo.seafood.core.repository.sell.SellRepository;
 import com.icaroerasmo.seafood.core.repository.store.StoreRepository;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -24,11 +26,11 @@ public class SellService extends Service<Sell> {
     private StoreRepository storeRepository;
     @Override
     @Cacheable(value = "sellById", key = "#id")
-    public Mono<Sell> findById(String id) {
+    public Mono<Sell> findById(@Valid @NotEmpty String id) {
         return super.findById(id);
     }
     @Cacheable(value = "sellsByUserId", key = "#userId")
-    public Flux<Sell> findAllSellsByUserId(String userId) {
+    public Flux<Sell> findAllSellsByUserId(@Valid @NotEmpty String userId) {
         return userRepository.
                 existsById(userId).
                 flatMapMany(
@@ -37,7 +39,7 @@ public class SellService extends Service<Sell> {
                                 Flux.error(new DataNotFoundException("User not found for id "+ userId))).cache();
     }
     @Cacheable(value = "sellsByStoreId", key = "#storeId")
-    public Flux<Sell> findAllSellsByStoreId(String storeId) {
+    public Flux<Sell> findAllSellsByStoreId(@Valid @NotEmpty String storeId) {
         return storeRepository.
                 existsById(storeId).
                 flatMapMany(
@@ -46,7 +48,7 @@ public class SellService extends Service<Sell> {
                                 Flux.error(new DataNotFoundException("Store not found for id "+ storeId))).cache();
     }
     @Override
-    public Mono<Sell> save(Sell sell) throws Exception {
+    public Mono<Sell> save(@Valid Sell sell) throws Exception {
 
         if(sell.getItems().stream().
                 anyMatch(item -> !item.getStore().

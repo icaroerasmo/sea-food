@@ -54,16 +54,15 @@ public class KafkaListeners {
 
         switch (message.getOperation()) {
             case SAVE -> doOnError.apply(
-                    service.save(payload)).
-                    subscribe((newPayload) -> {
-                        message.setPayload((T) newPayload);
-                        kafkaTemplate.send(Constants.KAFKA_OUTPUT_QUEUE, message);
-                    });
-            case DELETE -> doOnError.apply(service.delete(payload)).
-                    doOnSuccess((response) -> {
-                        kafkaTemplate.send(Constants.KAFKA_OUTPUT_QUEUE, message);
-                    }).subscribe();
+                                service.save(payload)).
+                        doOnSuccess((newPayload) -> {
+                            message.setPayload((T) newPayload);
+                        }).block();
+            case DELETE ->  doOnError.apply(service.delete(payload)).
+                        doOnSuccess((resp) -> {}).block();
         }
+
+        kafkaTemplate.send(Constants.KAFKA_OUTPUT_QUEUE, message);
     }
 
     private <T extends DocumentBase> Service<T> getServiceBean(T payload) {

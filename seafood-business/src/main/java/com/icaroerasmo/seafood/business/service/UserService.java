@@ -6,9 +6,9 @@ import com.icaroerasmo.seafood.business.exceptions.PasswordNotChangedException;
 import com.icaroerasmo.seafood.core.model.Person;
 import com.icaroerasmo.seafood.core.model.User;
 import com.icaroerasmo.seafood.core.repository.user.UserRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -19,27 +19,25 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
-    @Autowired
-    private CacheManager cacheManager;
     @Override
     @Cacheable(value = "userById", key = "#id")
-    public Mono<User> findById(String id) {
+    public Mono<User> findById(@Valid @NotEmpty String id) {
         return super.findById(id);
     }
     @Cacheable(value="userByDocumentNo", key="#documentNo")
-    public Mono<User> findUserByDocumentNo(String documentNo) {
+    public Mono<User> findUserByDocumentNo(@Valid @NotEmpty String documentNo) {
         return ((UserRepository) repository).findUserByDocumentNo(documentNo).cache();
     }
     @Cacheable(value="userByEmail", key="#email")
-    public Mono<User> findUserByEmail(String email) {
+    public Mono<User> findUserByEmail(@Valid @NotEmpty String email) {
         return ((UserRepository) repository).findUserByEmail(email).cache();
     }
     @Cacheable(value="usersByNamePrefix", key="#namePrefix")
-    public Flux<User> findAllUsersByNamePrefix(String namePrefix) {
+    public Flux<User> findAllUsersByNamePrefix(@Valid @NotEmpty String namePrefix) {
         return ((UserRepository) repository).findAllUsersByNamePrefix(namePrefix).cache();
     }
     @Override
-    public Mono<User> save(User user) throws Exception {
+    public Mono<User> save(@Valid User user) throws Exception {
 
         if(user.getId() == null) {
             return super.save(user);
@@ -64,7 +62,7 @@ public class UserService extends Service<User> {
                 );
 
     }
-    public Mono<User> changePassword(PasswordChangeDTO passwordChangeDTO) {
+    public Mono<User> changePassword(@Valid PasswordChangeDTO passwordChangeDTO) {
         //TODO encrypt old and new passwords
         return repository.findById(passwordChangeDTO.getUserId()).
                 switchIfEmpty(
