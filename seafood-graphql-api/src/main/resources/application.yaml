@@ -30,6 +30,7 @@ seafood:
   cache:
     ttl: 180000
   messages:
+    backoffDelay: 1000
     groupId: seafood
     timeout: 120000
     numberOfRetries: 3

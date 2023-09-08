@@ -21,6 +21,7 @@ logging:
       org.springframework: debug
 seafood:
   messages:
+    backoffDelay: 1000
     groupId: seafood
     timeout: 120000
     numberOfRetries: 3

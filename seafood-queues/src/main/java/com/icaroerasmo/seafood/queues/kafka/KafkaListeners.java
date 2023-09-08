@@ -26,7 +26,7 @@ public class KafkaListeners {
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
     @RetryableTopic(
-            backoff = @Backoff(value = 3000L),
+            backoff = @Backoff(delayExpression = "#{@messagesProperties.getBackoffDelay()}"),
             attempts = "#{@messagesProperties.getNumberOfRetries()}",
             autoCreateTopics = "false")
     @KafkaListener(id = "#{@messagesProperties.getGroupId()}", topics = Constants.KAFKA_INPUT_QUEUE)
