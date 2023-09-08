@@ -6,7 +6,6 @@ spring:
   kafka:
     consumer:
       bootstrap-servers: 127.0.0.1:9092
-      group-id: group_id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: com.icaroerasmo.seafood.core.util.KafkaDeserializer
@@ -14,7 +13,6 @@ spring:
       bootstrap-servers: 127.0.0.1:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: com.icaroerasmo.seafood.core.util.KafkaSerializer
-      group-id: group_id
 logging:
   pattern:
     level:
@@ -23,4 +21,6 @@ logging:
       org.springframework: debug
 seafood:
   messages:
-    numberOfRetries: 10
+    groupId: seafood
+    timeout: 120000
+    numberOfRetries: 3

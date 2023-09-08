@@ -6,7 +6,6 @@ import com.icaroerasmo.seafood.core.enums.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 @Log4j2
 @Component
-@KafkaListener(id = "${spring.kafka.producer.group-id}", topics = Constants.KAFKA_OUTPUT_QUEUE)
 public class KafkaListeners {
     @Autowired
     private ApplicationContext context;
@@ -23,13 +21,19 @@ public class KafkaListeners {
     private KafkaService kafkaService;
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
-    @KafkaHandler
     @RetryableTopic(
             backoff = @Backoff(value = 3000L),
-            attempts = "${@MessagesProperties.getNumberOfRetries()}",
+            attempts = "#{@messagesProperties.getNumberOfRetries()}",
             autoCreateTopics = "false")
+    @KafkaListener(id = "#{@messagesProperties.getGroupId()}", topics = Constants.KAFKA_OUTPUT_QUEUE)
     public <T> void outputListener(KafkaMessageDTO<T> message) throws Exception {
         log.info("Message {} received", message);
         kafkaService.save(message);
+    }
+    @KafkaListener(
+            id = "#{@messagesProperties.getGroupId()}"+Constants.KAFKA_DLT_SUFFIX_ID,
+            topics = Constants.KAFKA_OUTPUT_QUEUE+Constants.KAFKA_DLT_SUFFIX)
+    public <T> void outputListenerDlt(KafkaMessageDTO<T> message) throws Exception {
+        log.info("Message {} could not be processed. Discarding...", message);
     }
 }

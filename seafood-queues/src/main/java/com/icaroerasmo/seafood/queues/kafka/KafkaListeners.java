@@ -9,7 +9,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
-import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -21,20 +20,25 @@ import java.util.function.UnaryOperator;
 
 @Log4j2
 @Component
-@KafkaListener(id = "${spring.kafka.producer.group-id}", topics = Constants.KAFKA_INPUT_QUEUE)
 public class KafkaListeners {
     @Autowired
     private ApplicationContext context;
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
-    @KafkaHandler
     @RetryableTopic(
             backoff = @Backoff(value = 3000L),
-            attempts = "${@MessagesProperties.getNumberOfRetries()}",
+            attempts = "#{@messagesProperties.getNumberOfRetries()}",
             autoCreateTopics = "false")
+    @KafkaListener(id = "#{@messagesProperties.getGroupId()}", topics = Constants.KAFKA_INPUT_QUEUE)
     public <T extends DocumentBase> void inputListener(KafkaMessageDTO<T> message) throws Exception {
         log.info("Message {} received", message);
         process(message);
+    }
+    @KafkaListener(
+            id = "#{@messagesProperties.getGroupId()}"+Constants.KAFKA_DLT_SUFFIX_ID,
+            topics = Constants.KAFKA_INPUT_QUEUE+Constants.KAFKA_DLT_SUFFIX)
+    public <T extends DocumentBase> void inputListenerDlt(KafkaMessageDTO<T> message) throws Exception {
+        log.info("Message {} could not be processed. Discarding...", message);
     }
 
     private <T extends DocumentBase> void process(KafkaMessageDTO<T> message) {
