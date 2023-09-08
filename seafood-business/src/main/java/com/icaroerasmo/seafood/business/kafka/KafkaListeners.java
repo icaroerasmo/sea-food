@@ -20,14 +20,14 @@ public class KafkaListeners {
             attempts = "#{@messagesProperties.getNumberOfRetries()}",
             autoCreateTopics = "false")
     @KafkaListener(id = "#{@messagesProperties.getGroupId()}", topics = Constants.KAFKA_OUTPUT_QUEUE)
-    public <T> void outputListener(KafkaMessageDTO<T> message) throws Exception {
+    public <T> void outputListener(KafkaMessageDTO<T> message) {
         log.info("Message {} received", message);
         kafkaService.save(message);
     }
     @KafkaListener(
             id = "#{@messagesProperties.getGroupId()}"+Constants.KAFKA_DLT_SUFFIX_ID,
             topics = Constants.KAFKA_OUTPUT_QUEUE+Constants.KAFKA_DLT_SUFFIX)
-    public <T> void outputListenerDlt(KafkaMessageDTO<T> message) throws Exception {
+    public <T> void outputListenerDlt(KafkaMessageDTO<T> message) {
         log.info("Message {} could not be processed. Discarding...", message);
     }
 }
