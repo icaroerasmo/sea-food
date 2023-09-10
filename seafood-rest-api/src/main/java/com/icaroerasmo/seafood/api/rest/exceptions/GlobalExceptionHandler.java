@@ -6,6 +6,7 @@ import com.icaroerasmo.seafood.business.exceptions.DataNotFoundException;
 import com.icaroerasmo.seafood.business.exceptions.KafkaMessagesException;
 import com.icaroerasmo.seafood.business.exceptions.PasswordNotChangedException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,6 +35,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PasswordNotChangedException.class)
     ResponseEntity<ErrorMessageDTO> passwordNotChangedException(PasswordNotChangedException exception) {
         log.info("It was not possible to change password:", exception);
+        final HttpStatus status = HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(new ErrorMessageDTO(status.value(), exception.getMessage()));
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    ResponseEntity<ErrorMessageDTO> dataIntegrityViolationException(DataIntegrityViolationException exception) {
+        log.info("Data integrity violation", exception);
         final HttpStatus status = HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(new ErrorMessageDTO(status.value(), exception.getMessage()));
     }

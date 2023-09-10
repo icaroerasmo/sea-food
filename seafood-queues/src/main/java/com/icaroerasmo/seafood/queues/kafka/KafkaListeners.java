@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -26,6 +27,7 @@ public class KafkaListeners {
     @Autowired
     private KafkaTemplate<String, KafkaMessageDTO<?>> kafkaTemplate;
     @RetryableTopic(
+            exclude = DataIntegrityViolationException.class,
             backoff = @Backoff(delayExpression = "#{@messagesProperties.getBackoffDelay()}"),
             attempts = "#{@messagesProperties.getNumberOfRetries()}",
             autoCreateTopics = "false")

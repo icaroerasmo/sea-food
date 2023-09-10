@@ -16,6 +16,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @Log4j2
 @org.springframework.stereotype.Service
 public class UserService extends Service<User> {
@@ -40,6 +42,9 @@ public class UserService extends Service<User> {
     public Mono<User> save(@Valid User user) throws Exception {
 
         if(user.getId() == null) {
+            ObjectUtils.requireNonEmpty(user.getPassword(), "Password cannot be empty");
+            ObjectUtils.requireNonEmpty(user.getUserInfo().getDocumentNo(), "Document no cannot empty");
+            Objects.requireNonNull(user.getUserInfo().getPersonType(), "Person type cannot be null");
             return super.save(user);
         }
 
@@ -47,12 +52,12 @@ public class UserService extends Service<User> {
                 findById(user.getId()).
                 switchIfEmpty(Mono.error(new DataNotFoundException("User not found for ID: "+user.getId()))).
                 flatMap((savedUser) -> {
-                            if(savedUser != null) {
-                                Person person = savedUser.getUserInfo();
-                                user.setPassword(savedUser.getPassword());
-                                user.getUserInfo().setDocumentNo(person.getDocumentNo());
-                                user.getUserInfo().setPersonType(person.getPersonType());
-                            }
+
+                            Person person = savedUser.getUserInfo();
+                            user.setPassword(savedUser.getPassword());
+                            user.getUserInfo().setDocumentNo(person.getDocumentNo());
+                            user.getUserInfo().setPersonType(person.getPersonType());
+
                             try {
                                 return super.save(user);
                             } catch (Exception e) {

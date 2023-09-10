@@ -15,13 +15,11 @@ import java.util.List;
 public class Person {
     @NotEmpty
     protected String name;
-    @NotEmpty
     protected String documentNo;
     @NotEmpty
     protected String email;
     @NotEmpty
     protected String phone;
-    @NotNull
     protected PersonType personType;
     @NotNull
     protected List<Address> addresses;
